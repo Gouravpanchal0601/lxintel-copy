@@ -1313,7 +1313,7 @@
 
   <script>
     // API Configuration
-    const API_BASE_URL = "";
+    const API_BASE_URL = "https://laurene-clearheaded-nonaromatically.ngrok-free.dev";
 
     // Global array to store all selected files
     let allSelectedFiles = [];
@@ -1419,103 +1419,7 @@
         updateChatIconVisibility();
       });
 
-    // Process button click handler (merged upload + process)
-    document
-      .getElementById("process-btn")
-      .addEventListener("click", async function () {
-        const fileInput = document.getElementById("file");
-        const files = fileInput.files;
-
-        if (!files || files.length === 0) {
-          alert("Please select a file");
-          return;
-        }
-
-        const file = files[0];
-
-        // Show processing overlay
-        document.getElementById("processing-overlay").style.display = "flex";
-        document.getElementById("processing-message").textContent =
-          "Uploading and processing document...";
-
-        const token = localStorage.getItem("jwtdemand");
-        if (!token) {
-          alert("Not authenticated. Please log in again.");
-          document.getElementById("processing-overlay").style.display = "none";
-          return;
-        }
-
-        try {
-          // Step 1: Upload file
-          const uploadFormData = new FormData();
-          uploadFormData.append("files", file);
-
-          const uploadResponse = await fetch(
-            API_BASE_URL + "/Demand_optimizer/upload",
-            {
-              method: "POST",
-              headers: {
-                'Authorization': 'Bearer ' + token,
-                'ngrok-skip-browser-warning': 'true'
-              },
-              body: uploadFormData,
-            }
-          );
-
-          if (!uploadResponse.ok) {
-            throw new Error("Upload failed");
-          }
-
-          const uploadData = await uploadResponse.json();
-          console.log("Upload response:", uploadData);
-
-          // Store session_id
-          const sessionId = uploadData.session_id;
-          localStorage.setItem("session_id", sessionId);
-          console.log("Session ID stored:", sessionId);
-
-          // Step 2: Process document immediately
-          document.getElementById("processing-message").textContent =
-            "Processing document...";
-
-          const processFormData = new FormData();
-          processFormData.append("session_id", sessionId);
-
-          const processResponse = await fetch(
-            API_BASE_URL + "/Demand_optimizer/process",
-            {
-              method: "POST",
-              headers: {
-                'Authorization': 'Bearer ' + token,
-                'ngrok-skip-browser-warning': 'true'
-              },
-              body: processFormData,
-            }
-          );
-
-          if (!processResponse.ok) {
-            throw new Error("Process failed");
-          }
-
-          const processData = await processResponse.json();
-          console.log("Process response:", processData);
-
-          // Display results
-          const summaryContainer = document.getElementById("summary-container");
-          if (processData.summary) {
-            summaryContainer.innerHTML = `<div class="summary-box"><strong>Report:</strong><br>${marked.parse(
-              processData.summary
-            )}</div>`;
-          }
-
-          // Hide processing overlay
-          document.getElementById("processing-overlay").style.display = "none";
-        } catch (error) {
-          console.error("Error:", error);
-          document.getElementById("processing-overlay").style.display = "none";
-          alert("Error processing document: " + error.message);
-        }
-      });
+    // NOTE: Deduplicated process handler — use the single merged handler below
 
     // Merged upload + process handler
     document.getElementById("process-btn").addEventListener("click", async function () {
@@ -2088,8 +1992,7 @@
       }
     }
 
-    function formatLastActive(dateStr) {
-      
+    function formatLastActive(dateStr) {      
       try {
         const date = new Date(dateStr);
         const now = new Date();

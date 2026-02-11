@@ -206,6 +206,77 @@
         color: #fff;
       }
 
+      .prompt-textarea {
+        border: 1px solid #f1c40f;
+        border-radius: 0.25rem;
+        padding: 1rem;
+        background-color: #000;
+        font-family: monospace;
+        white-space: pre-wrap;
+        height: 300px;
+        overflow-y: auto;
+        font-size: 0.9rem;
+        color: #fff;
+        width: 100%;
+        resize: vertical;
+      }
+
+      .prompt-controls {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .prompt-edit-btn,
+      .prompt-save-btn,
+      .prompt-cancel-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .prompt-edit-btn {
+        background-color: #f1c40f;
+        color: #000;
+      }
+
+      .prompt-edit-btn:hover {
+        background-color: #d4ac0d;
+      }
+
+      .prompt-save-btn {
+        background-color: #2ecc71;
+        color: #fff;
+      }
+
+      .prompt-save-btn:hover {
+        background-color: #27ae60;
+      }
+
+      .prompt-cancel-btn {
+        background-color: #e74c3c;
+        color: #fff;
+      }
+
+      .prompt-cancel-btn:hover {
+        background-color: #c0392b;
+      }
+
+      .prompt-wrapper {
+        position: relative;
+      }
+
+      .prompt-label-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
       .header-bar {
         background-color: rgba(17, 17, 17, 0.8);
         color: #f1c40f;
@@ -783,36 +854,70 @@
           <h3>Login</h3>
           <form id="login-form" action="/dashboard" method="get">
             <label for="email">Email:</label>
-            <input type="email" id="login-email" name="email" class="form-control" required autocomplete="email">
-            
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              class="form-control"
+              required
+              autocomplete="email"
+            />
+
             <div class="email-status" id="login-email-status">
               <span class="status-icon"></span>
               <span class="status-text"></span>
             </div>
-            
-            <div class="error-message" id="login-error">Access denied: Your email is not on the authorized list.</div>
-            <button type="submit" id="login-button" class="btn btn-login w-100">Login</button>
+
+            <div class="error-message" id="login-error">
+              Access denied: Your email is not on the authorized list.
+            </div>
+            <button type="submit" id="login-button" class="btn btn-login w-100">
+              Login
+            </button>
           </form>
 
-          <hr style="border-color: #333; margin: 2rem 0;">
+          <hr style="border-color: #333; margin: 2rem 0" />
 
           <h3>Register New User</h3>
           <form id="register-form" action="/register" method="post">
             <label for="name">Full Name:</label>
-            <input type="text" name="name" id="register-name" class="form-control" required>
+            <input
+              type="text"
+              name="name"
+              id="register-name"
+              class="form-control"
+              required
+            />
 
             <label for="email">Email:</label>
-            <input type="email" id="register-email" name="email" class="form-control" required autocomplete="email">
-            
+            <input
+              type="email"
+              id="register-email"
+              name="email"
+              class="form-control"
+              required
+              autocomplete="email"
+            />
+
             <div class="email-status" id="register-email-status">
               <span class="status-icon"></span>
               <span class="status-text"></span>
             </div>
-            
-            <div class="error-message" id="register-error">Registration denied: Your email is not on the authorized list.</div>
-            <div class="success-message" id="register-success">Registration request submitted successfully!</div>
-            
-            <button type="submit" id="register-button" class="btn btn-login w-100">Register</button>
+
+            <div class="error-message" id="register-error">
+              Registration denied: Your email is not on the authorized list.
+            </div>
+            <div class="success-message" id="register-success">
+              Registration request submitted successfully!
+            </div>
+
+            <button
+              type="submit"
+              id="register-button"
+              class="btn btn-login w-100"
+            >
+              Register
+            </button>
           </form>
         </div>
       </div>
@@ -984,7 +1089,30 @@
                   </div>
 
                   <div class="mb-3">
-                    <div class="form-check form-switch">
+                    <label class="form-label">Custom Prompt</label>
+                    <div
+                      id="custom-prompts-list-container"
+                      style="
+                        border: 1px solid #444;
+                        border-radius: 6px;
+                        padding: 12px;
+                        background-color: #000;
+                        max-height: 400px;
+                        overflow-y: auto;
+                      "
+                    >
+                      <div
+                        style="text-align: center; padding: 20px; color: #aaa"
+                      >
+                        <p>Loading custom prompts...</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <div
+                      class="form-check form-switch d-flex justify-content-between"
+                    >
                       <input
                         class="form-check-input"
                         type="checkbox"
@@ -992,7 +1120,7 @@
                         name="use_manual"
                         value="true"
                       />
-                      <label class="form-check-label" for="use-manual">
+                      <label class="form-check-label mt-0" for="use-manual">
                         <div class="d-flex align-items-center">
                           <span>Manual Terms Redaction</span>
                           <span
@@ -1039,10 +1167,48 @@
                     </div>
                   </div>
 
-                  <div class="mb-3">
-                    <label class="form-label">Prompt Preview</label>
+                  <!-- CHANGED: Updated Prompt Preview Section -->
+                  <div class="mb-3 prompt-wrapper">
+                    <div class="prompt-label-container">
+                      <label class="form-label">Prompt Preview</label>
+                      <button
+                        type="button"
+                        class="prompt-edit-btn"
+                        id="edit-prompt-btn"
+                        onclick="togglePromptEdit()"
+                      >
+                        Edit
+                      </button>
+                    </div>
                     <div id="prompt-preview" class="prompt-preview">
                       Loading prompt...
+                    </div>
+                    <!-- CHANGED: Hidden textarea for editing -->
+                    <textarea
+                      id="prompt-textarea"
+                      class="prompt-textarea"
+                      style="display: none"
+                    ></textarea>
+                    <!-- CHANGED: Control buttons for edit mode -->
+                    <div
+                      id="prompt-controls"
+                      class="prompt-controls"
+                      style="display: none"
+                    >
+                      <button
+                        type="button"
+                        class="prompt-save-btn"
+                        onclick="savePromptEdit()"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        class="prompt-cancel-btn"
+                        onclick="cancelPromptEdit()"
+                      >
+                        Cancel
+                      </button>
                     </div>
                   </div>
 
@@ -1083,7 +1249,7 @@
               </div>
             </div>
 
-            <div class="card mt-4">
+            <div class="card">
               <div class="card-header">Instructions</div>
               <div class="card-body">
                 <ol class="text-muted" style="margin-bottom: 0">
@@ -1105,7 +1271,12 @@
         </div>
         <div
           id="summary-container"
-          style="display: none; margin-top: 30px; color: white; pointer-events: auto;"
+          style="
+            display: none;
+            margin-top: 30px;
+            color: white;
+            pointer-events: auto;
+          "
         >
           <!-- Summary HTML will be rendered here directly -->
         </div>
@@ -1153,7 +1324,79 @@
       // ========================================
       // API Configuration
       // ========================================
-      const APP_BASE_URL = "https://laurene-clearheaded-nonaromatically.ngrok-free.dev"; 
+      const APP_BASE_URL =
+        "https://laurene-clearheaded-nonaromatically.ngrok-free.dev";
+
+      // ========================================
+      // Prompt Edit Functionality (NEW)
+      // ========================================
+      let originalPromptContent = ""; // Store original prompt for cancel operation
+      let isPromptModified = false; // Track if prompt has been modified
+
+      function togglePromptEdit() {
+        const preview = document.getElementById("prompt-preview");
+        const textarea = document.getElementById("prompt-textarea");
+        const controls = document.getElementById("prompt-controls");
+        const editBtn = document.getElementById("edit-prompt-btn");
+
+        if (preview.style.display !== "none") {
+          // Switch to edit mode
+          originalPromptContent = preview.textContent; // Store original content
+          textarea.value = originalPromptContent;
+          textarea.style.display = "block";
+          controls.style.display = "flex";
+          preview.style.display = "none";
+          editBtn.style.display = "none";
+          isPromptModified = false;
+        }
+      }
+
+      function savePromptEdit() {
+        const textarea = document.getElementById("prompt-textarea");
+        const preview = document.getElementById("prompt-preview");
+        const controls = document.getElementById("prompt-controls");
+        const editBtn = document.getElementById("edit-prompt-btn");
+
+        const newContent = textarea.value;
+
+        // Check if content has actually changed
+        if (newContent !== originalPromptContent) {
+          isPromptModified = true;
+        } else {
+          isPromptModified = false;
+        }
+
+        // Update preview to show the edited content
+        preview.textContent = newContent;
+
+        // Switch back to preview mode
+        textarea.style.display = "none";
+        controls.style.display = "none";
+        preview.style.display = "block";
+        editBtn.style.display = "block";
+
+        console.log("Prompt saved. Modified:", isPromptModified);
+      }
+
+      function cancelPromptEdit() {
+        const textarea = document.getElementById("prompt-textarea");
+        const preview = document.getElementById("prompt-preview");
+        const controls = document.getElementById("prompt-controls");
+        const editBtn = document.getElementById("edit-prompt-btn");
+
+        // Restore preview to original content
+        preview.textContent = originalPromptContent;
+
+        // Switch back to preview mode
+        textarea.style.display = "none";
+        controls.style.display = "none";
+        preview.style.display = "block";
+        editBtn.style.display = "block";
+
+        isPromptModified = false;
+
+        console.log("Prompt edit cancelled");
+      }
 
       // ========================================
       // Page Load & Authentication
@@ -1179,15 +1422,12 @@
         const token = localStorage.getItem("access_token");
 
         try {
-          const response = await fetch(
-            `${APP_BASE_URL}/dashboard`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-                "ngrok-skip-browser-warning": "true",
-              },
+          const response = await fetch(`${APP_BASE_URL}/dashboard`, {
+            headers: {
+              Authorization: "Bearer " + token,
+              "ngrok-skip-browser-warning": "true",
             },
-          );
+          });
 
           if (!response.ok) {
             // Token invalid, clear and show login
@@ -1218,6 +1458,12 @@
         updatePromptPreview();
         updateUploadedDocumentsUI();
         loadActiveUsers();
+        // Load custom prompts now that user_email/access_token should be available
+        try {
+          fetchCustomPrompts();
+        } catch (e) {
+          console.warn("fetchCustomPrompts failed on showMainApp", e);
+        }
       }
 
       function logout() {
@@ -1229,7 +1475,7 @@
       // ========================================
       // Login and Registration Handler
       // ========================================
-      
+
       // Debounce function to limit API calls
       function debounce(func, wait) {
         let timeout;
@@ -1596,8 +1842,12 @@
           .then((data) => {
             if (data.prompt) {
               previewDiv.textContent = data.prompt;
+              originalPromptContent = data.prompt; // Store original content when loaded
+              isPromptModified = false;
             } else if (data.data) {
               previewDiv.textContent = data.data;
+              originalPromptContent = data.data;
+              isPromptModified = false;
             } else {
               previewDiv.textContent = "Unable to load prompt preview";
             }
@@ -1649,6 +1899,11 @@
 
           const promptSelect = document.getElementById("prompt");
           const prompt = promptSelect.value;
+
+          // CHANGED: Get the edited prompt if it was modified
+          const editedPromptText =
+            document.getElementById("prompt-preview").textContent;
+          const updatedPrompt = isPromptModified ? editedPromptText : null;
 
           const useManualCheckbox = document.getElementById("use-manual");
           const useManual = useManualCheckbox.checked;
@@ -1708,17 +1963,14 @@
               uploadUrl += "?regenerate=true";
             }
 
-            const uploadResponse = await fetch(
-              uploadUrl,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: "Bearer " + token,
-                  "ngrok-skip-browser-warning": "true",
-                },
-                body: uploadFormData,
+            const uploadResponse = await fetch(uploadUrl, {
+              method: "POST",
+              headers: {
+                Authorization: "Bearer " + token,
+                "ngrok-skip-browser-warning": "true",
               },
-            );
+              body: uploadFormData,
+            });
 
             if (!uploadResponse.ok) {
               throw new Error("Upload failed");
@@ -1773,17 +2025,14 @@
             const readFormData = new FormData();
             readFormData.append("file_id", fileId);
 
-            const readResponse = await fetch(
-              `${APP_BASE_URL}/read`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: "Bearer " + token,
-                  "ngrok-skip-browser-warning": "true",
-                },
-                body: readFormData,
+            const readResponse = await fetch(`${APP_BASE_URL}/read`, {
+              method: "POST",
+              headers: {
+                Authorization: "Bearer " + token,
+                "ngrok-skip-browser-warning": "true",
               },
-            );
+              body: readFormData,
+            });
 
             if (!readResponse.ok) {
               throw new Error("Read failed");
@@ -1808,17 +2057,14 @@
               redactFormData.append("use_manual", "true");
             }
 
-            const redactResponse = await fetch(
-              `${APP_BASE_URL}/redact`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: "Bearer " + token,
-                  "ngrok-skip-browser-warning": "true",
-                },
-                body: redactFormData,
+            const redactResponse = await fetch(`${APP_BASE_URL}/redact`, {
+              method: "POST",
+              headers: {
+                Authorization: "Bearer " + token,
+                "ngrok-skip-browser-warning": "true",
               },
-            );
+              body: redactFormData,
+            });
 
             if (!redactResponse.ok) {
               throw new Error("Redaction failed");
@@ -1873,6 +2119,29 @@
             processingMessage.textContent = "Step 5/7: Retrieving context...";
             const retrieveFormData = new FormData();
             retrieveFormData.append("file_id", fileId);
+            // CHANGED: Add updated_prompt if prompt was edited
+
+            if (updatedPrompt) {
+              try {
+                // Ensure the placeholder {document_text} is present in the updated prompt.
+                // If it's missing, append it (with a leading space) so the backend always receives it.
+                if (updatedPrompt.indexOf("{document_text}") === -1) {
+                  updatedPromptWithDoc = updatedPrompt + " {document_text}";
+                  console.log("📝 {document_text} appended to updated_prompt");
+                  retrieveFormData.append(
+                    "updated_prompt",
+                    updatedPromptWithDoc,
+                  );
+                } else {
+                  retrieveFormData.append("updated_prompt", updatedPrompt);
+                }
+              } catch (e) {
+                console.error(
+                  "Error ensuring {document_text} in updatedPrompt",
+                  e,
+                );
+              }
+            }
 
             const retrieveResponse = await fetch(
               `${APP_BASE_URL}/vectors/retrieve`,
@@ -2040,7 +2309,7 @@
         // Render HTML directly without any wrapper or formatting
         summaryContainer.innerHTML = processedContent;
         summaryContainer.style.display = "block";
-        
+
         // Ensure header buttons remain interactive
         const headerBar = document.querySelector(".header-bar");
         if (headerBar) {
@@ -2135,15 +2404,12 @@
           const token = localStorage.getItem("access_token");
           if (!token) return;
 
-          const res = await fetch(
-            `${APP_BASE_URL}/active-today`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-                "ngrok-skip-browser-warning": "true",
-              },
+          const res = await fetch(`${APP_BASE_URL}/active-today`, {
+            headers: {
+              Authorization: "Bearer " + token,
+              "ngrok-skip-browser-warning": "true",
             },
-          );
+          });
 
           if (!res.ok) {
             console.error("Failed to load active users:", res.status);
@@ -2287,7 +2553,8 @@
         }
 
         // Build WebSocket URL - replace https:// with wss:// or http:// with ws://
-        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsProtocol =
+          window.location.protocol === "https:" ? "wss:" : "ws:";
         const wsUrl = `${wsProtocol}//${window.location.host}/chat/${fileId}`;
 
         console.log("DEBUG: WebSocket URL:", wsUrl);
@@ -2499,11 +2766,14 @@
         if (chatContainer) {
           console.log("DEBUG: Chat container found, setting display to flex");
           chatContainer.style.display = "flex";
-          
+
           const messagesDiv = document.getElementById("chat-messages");
           if (messagesDiv && messagesDiv.children.length === 0) {
-            addChatMessage("assistant", "Hello, Ask a Question about your document!");
-          } 
+            addChatMessage(
+              "assistant",
+              "Hello, Ask a Question about your document!",
+            );
+          }
         } else {
           console.log("DEBUG: Chat container NOT found!");
         }
@@ -2562,6 +2832,143 @@
           sendChatMessage();
         }
       });
+
+      // Custom Prompt Functions
+      async function fetchCustomPrompts() {
+        try {
+          // Use the logged-in user's email and token if available
+          const rawEmail = localStorage.getItem("user_email");
+          const email = encodeURIComponent(rawEmail);
+          const token =
+            localStorage.getItem("access_token") ||
+            localStorage.getItem("authToken");
+          const response = await fetch(
+            `${APP_BASE_URL}/prompts/medical-summary?email=${email}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "ngrok-skip-browser-warning": "true",
+              },
+            },
+          );
+
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          displayCustomPrompts(data.prompts || []);
+        } catch (error) {
+          const container = document.getElementById(
+            "custom-prompts-list-container",
+          );
+          if (container) {
+            container.innerHTML = `<div style="text-align: center; padding: 20px; color: #e74c3c;"><p>Error loading custom prompts: ${error.message}</p></div>`;
+          }
+        }
+      }
+
+      function displayCustomPrompts(prompts) {
+        const container = document.getElementById(
+          "custom-prompts-list-container",
+        );
+
+        if (!prompts || prompts.length === 0) {
+          container.innerHTML =
+            '<div style="text-align: center; padding: 20px; color: #aaa;"><p>No custom prompts available</p></div>';
+          return;
+        }
+
+        // Store prompts in a safe global map
+        window._customPromptsCache = {};
+
+        let html = "";
+        prompts.forEach((prompt, index) => {
+          const truncatedPrompt = prompt.substring(0, 100);
+          const isLong = prompt.length > 100;
+          const promptId = "custom-prompt-" + index;
+
+          // Store full prompt in cache
+          window._customPromptsCache[index] = prompt;
+
+          html += `
+            <div class="custom-prompt-item" style="background: rgba(17, 17, 17, 0.6); padding: 12px; border-radius: 6px; margin-bottom: 12px; border: 1px solid rgba(241, 196, 15, 0.2);">
+              <div class="prompt-text-wrapper" style="color: #e0e0e0; font-size: 13px; line-height: 1.6; margin-bottom: 10px;">
+                <span class="short-prompt-text" id="${promptId}-short">${escapeHtml(truncatedPrompt)}${isLong ? "..." : ""}</span>
+                ${isLong ? `<span class="full-prompt-text" id="${promptId}-full" style="display:none;">${escapeHtml(prompt)}</span>` : ""}
+                ${isLong ? `<button type="button" class="toggle-custom-prompt-btn" onclick="toggleCustomPromptView('${promptId}')" style="background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3); padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; margin-top: 6px; display: block; width: 100%; text-align: center; font-family: 'Montserrat', sans-serif; transition: all 0.2s ease;">View more</button>` : ""}
+              </div>
+              <button type="button" class="apply-custom-prompt-btn" onclick="applyCustomPrompt(${index})" style="background: #f1c40f; color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: 600; width: 100%; font-family: 'Montserrat', sans-serif; transition: all 0.2s ease;">
+                Apply Prompt
+              </button>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function toggleCustomPromptView(promptId) {
+        try {
+          const shortEl = document.getElementById(promptId + "-short");
+          const fullEl = document.getElementById(promptId + "-full");
+          const btn = event.target;
+
+          if (!shortEl || !fullEl) return;
+
+          const isHidden = shortEl.style.display === "none";
+          if (isHidden) {
+            // Show short
+            shortEl.style.display = "";
+            fullEl.style.display = "none";
+            btn.textContent = "View more";
+          } else {
+            // Show full
+            shortEl.style.display = "none";
+            fullEl.style.display = "";
+            btn.textContent = "View less";
+          }
+        } catch (e) {
+          console.error("toggleCustomPromptView error", e);
+        }
+      }
+
+      function applyCustomPrompt(promptIndex) {
+        try {
+          // Get prompt from cache using index only (never breaks)
+          const promptText =
+            window._customPromptsCache &&
+            window._customPromptsCache[promptIndex];
+          if (!promptText) {
+            console.error("Prompt not found at index:", promptIndex);
+            return;
+          }
+
+          // Update the prompt preview
+          const preview = document.getElementById("prompt-preview");
+          if (preview) {
+            preview.textContent = promptText;
+            originalPromptContent = promptText;
+            // Mark as modified so the updated prompt will be sent with processing
+            isPromptModified = true;
+            console.log("✓ Custom prompt applied to preview");
+          }
+        } catch (e) {
+          console.error("applyCustomPrompt error:", e);
+        }
+      }
+
+      function escapeHtml(str) {
+        if (typeof str !== "string") return str;
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+      // custom prompts are loaded after login in showMainApp()
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
