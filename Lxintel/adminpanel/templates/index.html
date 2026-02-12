@@ -1062,7 +1062,7 @@
               endpoint = `/admin/${toolName}/active-today`;
               break;
             case "prompt-logs":
-              endpoint = `/admin/${toolName}/prompt-logs`;
+              endpoint = `/admin/${toolName}/prompt_logs`;
               break;
           }
 
@@ -1246,6 +1246,11 @@
             }
           </div>
           <div><strong>Prompt Type:</strong> ${log.prompt_type || "N/A"}</div>
+          <div><strong>Model:</strong> ${log.model || "N/A"}</div>
+          <div><strong>Input Tokens:</strong> ${log.input_tokens != null ? log.input_tokens : "N/A"}</div>
+          <div><strong>Output Tokens:</strong> ${log.output_tokens != null ? log.output_tokens : "N/A"}</div>
+          <div><strong>Input Cost (USD):</strong> ${log.input_cost_usd != null ? log.input_cost_usd : "N/A"}</div>
+          <div><strong>Output Cost (USD):</strong> ${log.output_cost_usd != null ? log.output_cost_usd : "N/A"}</div>
           <div><strong>Timestamp:</strong> ${log.timestamp ? new Date(log.timestamp).toLocaleString() : "N/A"}</div>
         </div>
       `,
