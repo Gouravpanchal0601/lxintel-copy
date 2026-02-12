@@ -685,7 +685,6 @@
           <!-- CHANGED: Individual popup for CaseValue ,This three button below are commented for now -->
           <!-- <div class="tool-popup">
           <button class="popup-btn" onclick="showModal('error-logs', 'casevalue')">Error Logs</button>
-          <button class="popup-btn" onclick="showModal('usage', 'casevalue')">Usage</button>
           <button class="popup-btn" onclick="showModal('active-today', 'casevalue')">Active Session</button>
         </div> -->
         </div>
@@ -701,12 +700,6 @@
               onclick="showModal('error-logs', 'Medical_Summary_Generator')"
             >
               Error Logs
-            </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'Medical_Summary_Generator')"
-            >
-              Usage
             </button>
             <button
               class="popup-btn"
@@ -730,7 +723,6 @@
           <!-- CHANGED: Individual popup for BriefWriter ,This three button below are commented for now -->
           <!-- <div class="tool-popup">
           <button class="popup-btn" onclick="showModal('error-logs', 'briefwriter')">Error Logs</button>
-          <button class="popup-btn" onclick="showModal('usage', 'briefwriter')">Usage</button>
           <button class="popup-btn" onclick="showModal('active-today', 'briefwriter')">Active Session</button>
         </div> -->
         </div>
@@ -746,12 +738,6 @@
               onclick="showModal('error-logs', 'VICP_Attorney_Fees')"
             >
               Error Logs
-            </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'VICP_Attorney_Fees')"
-            >
-              Usage
             </button>
             <button
               class="popup-btn"
@@ -780,12 +766,7 @@
             >
               Error Logs
             </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'Settlement_Predictor')"
-            >
-              Usage
-            </button>
+            
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Settlement_Predictor')"
@@ -813,12 +794,7 @@
             >
               Error Logs
             </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'Injury_Intelligence')"
-            >
-              Usage
-            </button>
+            
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Injury_Intelligence')"
@@ -848,12 +824,6 @@
             </button>
             <button
               class="popup-btn"
-              onclick="showModal('usage', 'Demand_optimizer')"
-            >
-              Usage
-            </button>
-            <button
-              class="popup-btn"
               onclick="showModal('active-today', 'Demand_optimizer')"
             >
               Active Session
@@ -879,12 +849,7 @@
             >
               Error Logs
             </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'Demand_Quality_Assurance')"
-            >
-              Usage
-            </button>
+           
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Demand_Quality_Assurance')"
@@ -912,12 +877,7 @@
             >
               Error Logs
             </button>
-            <button
-              class="popup-btn"
-              onclick="showModal('usage', 'Vehicle_Loss_Analyzer')"
-            >
-              Usage
-            </button>
+            
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Vehicle_Loss_Analyzer')"
@@ -955,11 +915,11 @@
 
     <script>
       // ⚠️ IMPORTANT: Set your API base URL here (e.g., "http://127.0.0.1:8000" or your production URL)
-      const API_BASE_URL = "https://slimy-leonia-kyphotic.ngrok-free.dev"; // <-- UPDATE THIS WITH YOUR API URL
+      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev"; // <-- UPDATE THIS WITH YOUR API URL
       // Alternate base URL used only for Document Summary Generator popup API calls
       // Update this value if the Document Summary service is hosted separately
       const API_BASE_URL_DS =
-        "https://laurene-clearheaded-nonaromatically.ngrok-free.dev"; // <-- UPDATE THIS WITH THE DS API URL
+        "https://attired-hitchily-stephane.ngrok-free.dev"; // <-- UPDATE THIS WITH THE DS API URL
 
       // Check if already logged in on page load
       window.addEventListener("DOMContentLoaded", function () {
@@ -1097,11 +1057,7 @@
             case "error-logs":
               endpoint = `/admin/${toolName}/error-logs`;
               break;
-            case "usage":
-              // CHANGED: Use tokens endpoint with project_name query parameter
-              // const projectName = projectNameMap[toolName] || toolName;
-              endpoint = `/admin/${toolName}/tokens`;
-              break;
+            
             case "active-today":
               endpoint = `/admin/${toolName}/active-today`;
               break;
@@ -1168,7 +1124,6 @@
 
         const typeNames = {
           "error-logs": "Error Logs",
-          usage: "Usage Statistics",
           "active-today": "Active Today",
           "prompt-logs": "Prompt Logs",
         };
@@ -1195,9 +1150,7 @@
           case "error-logs":
             html = formatErrorLogs(data);
             break;
-          case "usage":
-            html = formatUsageData(data);
-            break;
+          
           case "active-today":
             html = formatActiveSessions(data);
             break;
@@ -1232,75 +1185,6 @@
       `,
           )
           .join("");
-      }
-
-      // Format usage data
-      function formatUsageData(data) {
-        if (Array.isArray(data)) {
-          return `
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>User Email</th>
-                <th>Project Name</th>
-                <th>Model</th>
-                <th>Prompt Tokens</th>
-                ${
-                  data.some((item) => item.input_cost_usd !== undefined)
-                    ? "<th>Input Cost (USD)</th>"
-                    : ""
-                }
-                <th>Completion Tokens</th>
-                ${
-                  data.some((item) => item.output_cost_usd !== undefined)
-                    ? "<th>Output Cost (USD)</th>"
-                    : ""
-                }
-                <th>Total Tokens</th>
-                <th>Last Used</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data
-                .map(
-                  (item) => `
-                <tr>
-                  <td>${item.user_email || "N/A"}</td>
-                  <td>${item.project_name || "N/A"}</td>
-                  <td>${item.model || "N/A"}</td>
-                  <td>${item.prompt_tokens || 0}</td>
-                  ${
-                    item.project_name === "Medical_Summary_Generator"
-                      ? `<td>${item.input_cost_usd !== undefined ? "$" + item.input_cost_usd : "N/A"}</td>`
-                      : ""
-                  }
-                  <td>${item.completion_tokens || 0}</td>
-                  ${
-                    item.project_name === "Medical_Summary_Generator"
-                      ? `<td>${item.output_cost_usd !== undefined ? "$" + item.output_cost_usd : "N/A"}</td>`
-                      : ""
-                  }
-                  <td>${item.total_tokens || 0}</td>
-                  <td>${item.last_updated ? new Date(item.last_updated).toLocaleString() : "N/A"}</td>
-                </tr>
-              `,
-                )
-                .join("")}
-            </tbody>
-          </table>
-        `;
-        } else if (typeof data === "object") {
-          return Object.entries(data)
-            .map(
-              ([key, value]) => `
-          <div class="data-item">
-            <strong>${formatKey(key)}:</strong> ${JSON.stringify(value, null, 2)}
-          </div>
-        `,
-            )
-            .join("");
-        }
-        return "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
       }
 
       // Format active sessions
