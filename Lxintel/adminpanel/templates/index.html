@@ -683,10 +683,27 @@
         <div class="dashboard-btn-wrapper">
           <button class="dashboard-btn" data-tool="casevalue">CaseValue</button>
           <!-- CHANGED: Individual popup for CaseValue ,This three button below are commented for now -->
-          <!-- <div class="tool-popup">
-          <button class="popup-btn" onclick="showModal('error-logs', 'casevalue')">Error Logs</button>
-          <button class="popup-btn" onclick="showModal('active-today', 'casevalue')">Active Session</button>
-        </div> -->
+
+          <div class="tool-popup">
+            <button
+              class="popup-btn"
+              onclick="showModal('error-logs', 'casevalue')"
+            >
+              Error Logs
+            </button>
+            <button
+              class="popup-btn"
+              onclick="showModal('active-today', 'casevalue')"
+            >
+              Active Session
+            </button>
+            <button
+              class="popup-btn"
+              onclick="showModal('prompt-logs', 'casevalue')"
+            >
+              Prompt Logs
+            </button>
+          </div>
         </div>
 
         <div class="dashboard-btn-wrapper">
@@ -721,10 +738,21 @@
             BriefWriter
           </button>
           <!-- CHANGED: Individual popup for BriefWriter ,This three button below are commented for now -->
-          <!-- <div class="tool-popup">
-          <button class="popup-btn" onclick="showModal('error-logs', 'briefwriter')">Error Logs</button>
-          <button class="popup-btn" onclick="showModal('active-today', 'briefwriter')">Active Session</button>
-        </div> -->
+
+          <div class="tool-popup">
+            <button
+              class="popup-btn"
+              onclick="showModal('error-logs', 'briefwriter')"
+            >
+              Error Logs
+            </button>
+            <button
+              class="popup-btn"
+              onclick="showModal('active-today', 'briefwriter')"
+            >
+              Active Session
+            </button>
+          </div>
         </div>
 
         <div class="dashboard-btn-wrapper">
@@ -766,7 +794,7 @@
             >
               Error Logs
             </button>
-            
+
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Settlement_Predictor')"
@@ -794,7 +822,7 @@
             >
               Error Logs
             </button>
-            
+
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Injury_Intelligence')"
@@ -849,7 +877,7 @@
             >
               Error Logs
             </button>
-           
+
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Demand_Quality_Assurance')"
@@ -877,7 +905,7 @@
             >
               Error Logs
             </button>
-            
+
             <button
               class="popup-btn"
               onclick="showModal('active-today', 'Vehicle_Loss_Analyzer')"
@@ -1057,7 +1085,7 @@
             case "error-logs":
               endpoint = `/admin/${toolName}/error-logs`;
               break;
-            
+
             case "active-today":
               endpoint = `/admin/${toolName}/active-today`;
               break;
@@ -1150,7 +1178,7 @@
           case "error-logs":
             html = formatErrorLogs(data);
             break;
-          
+
           case "active-today":
             html = formatActiveSessions(data);
             break;
