@@ -1416,6 +1416,7 @@ div#active-users-popover {
               placeholder="Enter your email"
               x-model="email"
               @input.debounce.500="verifyEmail()"
+              @keydown.enter="emailValid && login()"
             />
 
             <!-- Email Status -->
@@ -1921,7 +1922,7 @@ div#active-users-popover {
       <div class="modal-overlay" id="link-modal"></div>
 
     <script>
-      const API_BASE_URL = "";
+      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
       let threadId = null;
       let isProcessing = false;
       let uploadedImages = [];

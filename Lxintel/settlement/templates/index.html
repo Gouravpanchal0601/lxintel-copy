@@ -925,6 +925,7 @@ div#active-users-popover {
               placeholder="Enter your email"
               x-model="email"
               @input.debounce.500="verifyEmail()"
+              @keydown.enter="emailValid ? login() : null"
             />
             <!-- Email Status -->
             <div
@@ -1606,7 +1607,10 @@ div#active-users-popover {
 
     <script>
       // API Base URL
-      const API_BASE_URL = "";
+      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
+
+      // Track which threads have had the Optimize button shown
+      const optimizeButtonShownForThread = {};
 
       // Global variables
       let currentThreadId = null;
@@ -1840,10 +1844,52 @@ div#active-users-popover {
         const messageBubble = document.createElement("div");
 
         if (isAnalysis) {
-          // Create analysis bubble
+          // Create analysis bubble with an Optimize button in the top-right
           messageBubble.className = "analysis-bubble";
-          messageBubble.innerHTML = text;
-          console.log("🔍 Creating analysis bubble with HTML");
+          // make bubble position relative so we can absolutely position the button
+          messageBubble.style.position = "relative";
+
+          const contentDiv = document.createElement("div");
+          contentDiv.className = "analysis-content";
+          contentDiv.innerHTML = text;
+          messageBubble.appendChild(contentDiv);
+
+          // Only show Optimize on the first analysis response for a given thread
+          const threadIdForButton = currentThreadId || sessionStorage.getItem("thread_id");
+          messageDiv.appendChild(messageBubble);
+
+          if (threadIdForButton && !optimizeButtonShownForThread[threadIdForButton]) {
+            // mark shown immediately to avoid duplicates
+            optimizeButtonShownForThread[threadIdForButton] = true;
+
+            const optimizeBtn = document.createElement("button");
+            optimizeBtn.type = "button";
+            optimizeBtn.title = "Optimize";
+            optimizeBtn.innerText = "Optimize";
+            optimizeBtn.style.cssText = `
+              position: absolute;
+              top: 8px;
+              right: 8px;
+              background: #f1c40f;
+              color: #000;
+              border: none;
+              padding: 6px 10px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 600;
+              font-size: 12px;
+            `;
+            optimizeBtn.onclick = function(e) {
+              e.stopPropagation();
+              optimizeCurrentThread();
+            };
+
+            // append the button into the bubble so absolute positioning is relative to the bubble
+            messageBubble.appendChild(optimizeBtn);
+            console.log("🔍 Creating analysis bubble with HTML and Optimize button (first for thread)");
+          } else {
+            console.log("🔍 Analysis bubble created without Optimize button");
+          }
         } else {
           messageBubble.className = `px-4 py-2 rounded-lg ${
             sender === "user"
@@ -1856,7 +1902,9 @@ div#active-users-popover {
           messageBubble.textContent = text;
         }
 
-        messageDiv.appendChild(messageBubble);
+        if (!isAnalysis) {
+          messageDiv.appendChild(messageBubble);
+        }
         
         // Add save button for user messages with text content
         if (sender === "user" && text && !isAnalysis) {
@@ -1890,6 +1938,76 @@ div#active-users-popover {
         // Scroll to bottom
         chatMessages.scrollTop = chatMessages.scrollHeight;
         console.log("🔍 Message added to chat successfully");
+      }
+
+      // Call optimize API for current thread and display response
+      async function optimizeCurrentThread() {
+        const threadId = currentThreadId || sessionStorage.getItem("thread_id");
+        if (!threadId) {
+          addChatMessage("Unable to optimize: no thread id found.", "bot");
+          return;
+        }
+
+        // Add user message 'optimise'
+        // addChatMessage("Optimise", "user");
+
+        // show loader overlay if present
+        const loader = document.getElementById("loader_overlay");
+        if (loader) loader.classList.add("active");
+
+        try {
+          const token = localStorage.getItem("jwtsettle");
+          const resp = await fetch(`${API_BASE_URL}/Settlement_Predictor/optimize`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": token ? `Bearer ${token}` : "",
+            },
+            body: JSON.stringify({ thread_id: threadId }),
+          });
+
+          if (!resp.ok) {
+            const txt = await resp.text();
+            addChatMessage(`Error: ${txt}`, "bot");
+            return;
+          }
+
+          const contentType = resp.headers.get("content-type") || "";
+          let data;
+          if (contentType.includes("application/json")) {
+            data = await resp.json();
+          } else {
+            data = await resp.text();
+          }
+
+          // Display response (prefer optimized_analysis if present)
+          if (typeof data === "object") {
+            // Check if response contains an error
+            if (data.error) {
+              const errorMsg = `Unable to optimize at this time: ${data.error}. Please try again later.`;
+              addChatMessage(errorMsg, "bot");
+            } else if (data.optimized_analysis) {
+              const html = markdownToHtml(data.optimized_analysis);
+              addChatMessage(html, "bot", true);
+            } else if (data.analysis) {
+              const html = markdownToHtml(data.analysis);
+              addChatMessage(html, "bot", true);
+            } else if (data.result) {
+              const html = markdownToHtml(String(data.result));
+              addChatMessage(html, "bot", true);
+            } else {
+              const pretty = escapeHtml(JSON.stringify(data, null, 2));
+              addChatMessage(`<pre style=\"white-space:pre-wrap;color:#d1d5db;\">${pretty}</pre>`, "bot", true);
+            }
+          } else {
+            const html = markdownToHtml(String(data));
+            addChatMessage(html, "bot", true);
+          }
+        } catch (err) {
+          addChatMessage("Error: " + err.message, "bot");
+        } finally {
+          if (loader) loader.classList.remove("active");
+        }
       }
 
       // Initial Chat Functions

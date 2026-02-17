@@ -1325,7 +1325,15 @@
       // API Configuration
       // ========================================
       const APP_BASE_URL =
+<<<<<<< Updated upstream
         "https://slimy-leonia-kyphotic.ngrok-free.dev";
+=======
+<<<<<<< HEAD
+        "https://attired-hitchily-stephane.ngrok-free.dev";
+=======
+        "https://slimy-leonia-kyphotic.ngrok-free.dev";
+>>>>>>> 6b4c308f047dd4bc07177b519e8af6a532b46b09
+>>>>>>> Stashed changes
 
       // ========================================
       // Prompt Edit Functionality (NEW)
@@ -1375,7 +1383,6 @@
         preview.style.display = "block";
         editBtn.style.display = "block";
 
-        console.log("Prompt saved. Modified:", isPromptModified);
       }
 
       function cancelPromptEdit() {
@@ -1395,7 +1402,6 @@
 
         isPromptModified = false;
 
-        console.log("Prompt edit cancelled");
       }
 
       // ========================================
@@ -1643,7 +1649,6 @@
           },
         )
           .then((response) => {
-            console.log("Download response status:", response.status);
 
             if (!response.ok) {
               throw new Error(
@@ -1656,7 +1661,6 @@
             // If content-type is text/plain, it's the summary text - convert to PDF
             if (contentType && contentType.includes("text/plain")) {
               return response.text().then((textContent) => {
-                console.log("API returned text content, converting to PDF");
 
                 // Generate filename
                 let filename = fileId;
@@ -1710,7 +1714,6 @@
 
             // Otherwise try to download as blob (actual PDF from API)
             return response.blob().then((blob) => {
-              console.log("Blob received, size:", blob.size, "bytes");
 
               if (blob.size === 0) {
                 throw new Error(
@@ -1774,7 +1777,6 @@
           timestamp: timestamp,
         };
         sessionStorage.setItem(SESSION_FILES_KEY, JSON.stringify(files));
-        console.log("File saved to session storage:", file.name, timestamp);
         updateUploadedDocumentsUI();
       }
 
@@ -1934,7 +1936,6 @@
             // Clear any existing file_id from localStorage before processing new file
             if (!isRegenerate) {
               localStorage.removeItem("current_file_id");
-              console.log("Cleared existing file_id from localStorage");
             }
 
             processingMessage.textContent = "Step 1/7: Uploading document...";
@@ -1948,14 +1949,11 @@
               }
               uploadFormData.append("file", currentFile);
               uploadFormData.append("prompt", prompt);
-              console.log(
-                "⟳ Regenerating - sending file (binary) with regenerate=true param",
-              );
+              
             } else {
               // For new upload, send file
               uploadFormData.append("file", file);
               uploadFormData.append("prompt", prompt);
-              console.log("📤 New upload - sending file to upload API");
             }
 
             let uploadUrl = `${APP_BASE_URL}/upload`;
@@ -1981,14 +1979,12 @@
             // Check if response is HTML (already processed file)
             if (contentType && contentType.includes("text/html")) {
               const htmlContent = await uploadResponse.text();
-              console.log("✓ Upload returned HTML - file already processed");
 
               // Store filename as file_id if new upload, otherwise keep existing
               if (!isRegenerate && file) {
                 const fileName = file.name;
                 localStorage.setItem("current_file_id", fileName);
                 fileId = fileName;
-                console.log("Stored filename as file_id:", fileName);
               }
 
               // Hide processing overlay
@@ -2018,7 +2014,6 @@
 
             fileId = uploadData.file_id;
             localStorage.setItem("current_file_id", fileId);
-            console.log("✓ Upload successful, file_id:", fileId);
 
             // Step 2: Read
             processingMessage.textContent = "Step 2/7: Reading document...";
@@ -2044,7 +2039,6 @@
                 "Read failed: " + (readData.error || "Unknown error"),
               );
             }
-            console.log("✓ Read successful, chars:", readData.chars);
 
             // Step 3: Redact
             processingMessage.textContent = "Step 3/7: Applying redaction...";
@@ -2076,10 +2070,6 @@
                 "Redaction failed: " + (redactData.error || "Unknown error"),
               );
             }
-            console.log(
-              "✓ Redaction successful, mode:",
-              redactData.redaction_mode,
-            );
 
             // Step 4: Vectors Upsert
             processingMessage.textContent =
@@ -2110,10 +2100,6 @@
                   (upsertData.error || "Unknown error"),
               );
             }
-            console.log(
-              "✓ Vector upsert successful, chunks:",
-              upsertData.chunks,
-            );
 
             // Step 5: Vectors Retrieve
             processingMessage.textContent = "Step 5/7: Retrieving context...";
@@ -2127,7 +2113,6 @@
                 // If it's missing, append it (with a leading space) so the backend always receives it.
                 if (updatedPrompt.indexOf("{document_text}") === -1) {
                   updatedPromptWithDoc = updatedPrompt + " {document_text}";
-                  console.log("📝 {document_text} appended to updated_prompt");
                   retrieveFormData.append(
                     "updated_prompt",
                     updatedPromptWithDoc,
@@ -2166,10 +2151,6 @@
                   (retrieveData.error || "Unknown error"),
               );
             }
-            console.log(
-              "✓ Vector retrieve successful, chunks:",
-              retrieveData.retrieved_chunks,
-            );
 
             // Step 6: Generate Summary (Always returns HTML)
             processingMessage.textContent =
@@ -2195,7 +2176,6 @@
 
             // Generate API returns HTML but we don't show it yet
             const generateHtml = await generateResponse.text();
-            console.log("✓ Summary generation successful");
 
             // Step 7: Regenerate Summary (Final step)
             // After generate, always call regenerate to get the final summary
@@ -2222,7 +2202,6 @@
 
             // Regenerate API returns HTML - THIS is what we show
             const summaryHtml = await regenerateResponse.text();
-            console.log("✓ Summary regeneration successful");
 
             // Hide processing overlay
             document.getElementById("processing-overlay").style.display =
@@ -2280,7 +2259,6 @@
             summaryContainer.innerHTML = "";
           }
 
-          console.log("File changed - reset to Process Document mode");
         }
       });
 
@@ -2288,7 +2266,6 @@
       // Summary Display Functions
       // ========================================
       function renderSummary(htmlContent, showChat = true) {
-        console.log("DEBUG: renderSummary called, showChat =", showChat);
         const summaryContainer = document.getElementById("summary-container");
 
         // If response is a complete HTML document, extract body content only
@@ -2317,22 +2294,13 @@
           headerBar.style.zIndex = "100";
         }
 
-        console.log("DEBUG: Summary rendered, showChat =", showChat);
-
         // Add chat container only if showChat is true (after regenerate API, not after upload API)
         if (showChat) {
-          console.log("DEBUG: showChat is true, setting up chat in 100ms...");
           setTimeout(() => {
-            console.log("DEBUG: setTimeout callback executing...");
             const chatContainerExists =
               document.getElementById("chat-container");
-            console.log(
-              "DEBUG: chatContainerExists =",
-              chatContainerExists ? "YES" : "NO",
-            );
 
             if (!chatContainerExists) {
-              console.log("DEBUG: Creating chat HTML...");
               const chatHTML = `
                             <div id="chat-container">
                                 <div class="chat-header">
@@ -2350,14 +2318,11 @@
                             </div>
                         `;
               summaryContainer.innerHTML += chatHTML;
-              console.log("DEBUG: Chat HTML added to summary container");
             }
 
             // Always initialize chat if showChat is true, regardless of whether container existed
             const fileId = localStorage.getItem("current_file_id");
-            console.log("DEBUG: fileId from localStorage =", fileId);
             if (fileId) {
-              console.log("DEBUG: Calling initializeChat with fileId:", fileId);
               initializeChat(fileId);
             } else {
               console.log("DEBUG: ERROR - No fileId found in localStorage!");
@@ -2535,7 +2500,6 @@
         console.log(
           `[WebSocket] Connecting to chat: ${fileId} (attempt ${reconnectAttempts + 1})`,
         );
-        console.log("DEBUG: connectChatWebSocket called with fileId:", fileId);
 
         if (reconnectTimeout) {
           clearTimeout(reconnectTimeout);
@@ -2557,10 +2521,7 @@
           window.location.protocol === "https:" ? "wss:" : "ws:";
         const wsUrl = `${wsProtocol}//${window.location.host}/chat/${fileId}`;
 
-        console.log("DEBUG: WebSocket URL:", wsUrl);
-
         try {
-          console.log("DEBUG: Creating WebSocket...");
           chatWebSocket = new WebSocket(wsUrl);
           console.log(
             "DEBUG: WebSocket created, readyState:",
@@ -2571,7 +2532,6 @@
 
           // ===== ONOPEN =====
           chatWebSocket.onopen = function (event) {
-            console.log("✅ WebSocket connected:", fileId);
             reconnectAttempts = 0;
 
             const statusEl = document.getElementById("chat-status");
@@ -2626,7 +2586,6 @@
               }
 
               reconnectTimeout = setTimeout(() => {
-                console.log("Attempting reconnection...");
                 connectChatWebSocket(fileId);
               }, delay);
             } else if (reconnectAttempts >= maxReconnectAttempts) {
@@ -2748,8 +2707,6 @@
       }
 
       function initializeChat(fileId) {
-        console.log("🔌 Initializing chat for:", fileId);
-        console.log("DEBUG: initializeChat called, fileId from param:", fileId);
         console.log(
           "DEBUG: current localStorage current_file_id:",
           localStorage.getItem("current_file_id"),
@@ -2764,7 +2721,6 @@
 
         const chatContainer = document.getElementById("chat-container");
         if (chatContainer) {
-          console.log("DEBUG: Chat container found, setting display to flex");
           chatContainer.style.display = "flex";
 
           const messagesDiv = document.getElementById("chat-messages");
@@ -2779,7 +2735,6 @@
         }
 
         currentChatFileId = fileId;
-        console.log("DEBUG: About to call connectChatWebSocket...");
         connectChatWebSocket(fileId);
       }
 
@@ -2952,7 +2907,6 @@
             originalPromptContent = promptText;
             // Mark as modified so the updated prompt will be sent with processing
             isPromptModified = true;
-            console.log("✓ Custom prompt applied to preview");
           }
         } catch (e) {
           console.error("applyCustomPrompt error:", e);
