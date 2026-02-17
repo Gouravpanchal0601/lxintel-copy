@@ -962,15 +962,15 @@
         }
         
         try {
-          // Disable button and show loading
+          // Disable button and show loading with spinner
           uploadBtn.disabled = true;
-          uploadBtn.textContent = "Regenerating...";
+          uploadBtn.innerHTML = '<span class="login-btn-spinner"><span class="spinner"></span>Regenerating...</span>';
           uploadMessage.style.display = "none";
-          
-          // Enable file and department inputs during regenerate
-          fileInput.disabled = false;
-          departmentInput.disabled = false;
-          
+
+          // Keep file and department inputs disabled while regenerating
+          fileInput.disabled = true;
+          departmentInput.disabled = true;
+
           // Create FormData
           const formData = new FormData();
           formData.append("file", lastUploadedFile);
@@ -1009,7 +1009,7 @@
           // Refresh page to reset to upload button
           setTimeout(() => {
             location.reload();
-          }, 3000);
+          }, 2000);
           
         } catch (error) {
           uploadMessage.style.display = "block";
