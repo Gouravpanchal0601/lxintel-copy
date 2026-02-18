@@ -31,28 +31,6 @@
         overflow-x: hidden;
       }
 
-      .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-image: url("https://static.vecteezy.com/system/resources/previews/007/596/744/non_2x/abstract-digital-glossy-particles-and-lines-connected-3d-illustration-on-black-background-free-photo.jpg");
-        background-size: cover;
-        background-position: center top 150px;
-        z-index: -2;
-      }
-
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.85);
-        z-index: -1;
-      }
-
       /* LOGIN PAGE STYLES */
       .login-page-wrapper {
         position: fixed;
@@ -578,8 +556,6 @@
   </head>
 
   <body>
-    <div class="video-background"></div>
-    <div class="overlay"></div>
 
     <!-- LOGIN PAGE -->
     <div class="login-page-wrapper" id="login-page">
@@ -714,12 +690,12 @@
     </div>
 
     <script>
-      const API_BASE_URL = "https://slimy-leonia-kyphotic.ngrok-free.dev";
+      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
 
       // Check if already logged in on page load
       window.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("adminToken");
-        const adminEmail = localStorage.getItem("adminEmail");
+        const token = localStorage.getItem("SOPadminToken");
+        const adminEmail = localStorage.getItem("SOPadminEmail");
 
         if (token && adminEmail) {
           showDashboard(adminEmail);
@@ -769,8 +745,8 @@
 
           if (data.access_token) {
             // Store token and email
-            localStorage.setItem("adminToken", data.access_token);
-            localStorage.setItem("adminEmail", email);
+            localStorage.setItem("SOPadminToken", data.access_token);
+            localStorage.setItem("SOPadminEmail", email);
 
             // Show dashboard
             showDashboard(email);
@@ -800,42 +776,10 @@
       // Handle logout
       function handleLogout() {
         if (confirm("Are you sure you want to logout?")) {
-          localStorage.removeItem("adminToken");
-          localStorage.removeItem("adminEmail");
+          localStorage.removeItem("SOPadminToken");
+          localStorage.removeItem("SOPadminEmail");
           location.reload();
         }
-      }
-
-      // Get auth headers
-      function getAuthHeaders() {
-        const token = localStorage.getItem("adminToken");
-        return {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
-        };
-      }
-
-      // Display data in modal based on type
-      function displayModalData(type, data) {
-        const modalBody = document.getElementById("modal-body");
-
-        if (!data || (Array.isArray(data) && data.length === 0)) {
-          modalBody.innerHTML =
-            '<p style="text-align: center; padding: 40px; color: #aaa;">No data available</p>';
-          return;
-        }
-
-        let html = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
-        modalBody.innerHTML = html;
-      }
-
-      // Format object keys for display
-      function formatKey(key) {
-        return key
-          .split("_")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ");
       }
 
       // Global variables to store upload state
@@ -860,8 +804,6 @@
           return;
         }
         
-        // Department is optional - no validation error
-        
         try {
           // Disable button and show loading
           uploadBtn.disabled = true;
@@ -876,7 +818,7 @@
           }
           
           // Get auth token
-          const token = localStorage.getItem("adminToken");
+          const token = localStorage.getItem("SOPadminToken");
           if (!token) {
             throw new Error("Not authenticated. Please login again.");
           }
@@ -899,7 +841,7 @@
           const data = await response.json();
           
           // Check if response has indexed status or file already exists
-          if (data.result && (data.result.status === "indexed" || data.result.status.includes("file already present"))) {
+          if (data.result && (data.result.status === "indexed" || data.result.status.includes("file is already present"))) {
             // Store the uploaded file and department for regenerate
             lastUploadedFile = file;
             lastUploadedDepartment = department;
@@ -962,15 +904,15 @@
         }
         
         try {
-          // Disable button and show loading with spinner
+          // Disable button and show loading
           uploadBtn.disabled = true;
           uploadBtn.innerHTML = '<span class="login-btn-spinner"><span class="spinner"></span>Regenerating...</span>';
           uploadMessage.style.display = "none";
-
-          // Keep file and department inputs disabled while regenerating
+          
+          // Enable file and department inputs during regenerate
           fileInput.disabled = true;
-          departmentInput.disabled = true;
-
+          departmentInput.disabled = false;
+          
           // Create FormData
           const formData = new FormData();
           formData.append("file", lastUploadedFile);
@@ -979,7 +921,7 @@
           }
           
           // Get auth token
-          const token = localStorage.getItem("adminToken");
+          const token = localStorage.getItem("SOPadminToken");
           if (!token) {
             throw new Error("Not authenticated. Please login again.");
           }
@@ -1006,10 +948,22 @@
           uploadMessage.style.color = "#2ecc71";
           uploadMessage.textContent = "✓ File regenerated successfully!";
           
-          // Refresh page to reset to upload button
-          setTimeout(() => {
-            location.reload();
-          }, 2000);
+          // 🔥 Immediately reset to Upload state
+            lastUploadedFile = null;
+            lastUploadedDepartment = null;
+
+            // Enable inputs
+            fileInput.disabled = false;
+            departmentInput.disabled = false;
+
+            // Clear inputs
+            fileInput.value = "";
+            departmentInput.value = "";
+
+            // Reset button
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = "Upload";
+            uploadBtn.onclick = handleUpload;
           
         } catch (error) {
           uploadMessage.style.display = "block";
