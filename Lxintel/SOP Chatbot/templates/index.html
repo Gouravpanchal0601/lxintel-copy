@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -35,28 +35,6 @@
         color: #f1c40f;
         height: 100vh;
         overflow: hidden;
-      }
-
-      .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-image: url("https://static.vecteezy.com/system/resources/previews/007/596/744/non_2x/abstract-digital-glossy-particles-and-lines-connected-3d-illustration-on-black-background-free-photo.jpg");
-        background-size: cover;
-        background-position: center top 150px;
-        z-index: -2;
-      }
-
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.85);
-        z-index: -1;
       }
 
       .app-container {
@@ -173,43 +151,6 @@
       }
 
       .chat-messages::-webkit-scrollbar-thumb:hover {
-        background: rgba(241, 196, 15, 0.6);
-      }
-
-      /* Scrollbar styling for popovers */
-      #templates-popover::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      #templates-popover::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 4px;
-      }
-
-      #templates-popover::-webkit-scrollbar-thumb {
-        background: rgba(241, 196, 15, 0.4);
-        border-radius: 4px;
-      }
-
-      #templates-popover::-webkit-scrollbar-thumb:hover {
-        background: rgba(241, 196, 15, 0.6);
-      }
-
-      #active-users-popover::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      #active-users-popover::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 4px;
-      }
-
-      #active-users-popover::-webkit-scrollbar-thumb {
-        background: rgba(241, 196, 15, 0.4);
-        border-radius: 4px;
-      }
-
-      #active-users-popover::-webkit-scrollbar-thumb:hover {
         background: rgba(241, 196, 15, 0.6);
       }
 
@@ -540,10 +481,6 @@
           display: none;
         }
 
-        .thread-id {
-          display: none;
-        }
-
         .logo {
           height: 44px;
         }
@@ -754,69 +691,38 @@
         }
       }
 
-      .active_user{
-            position: fixed;
-    top: 80px;
-    left: 350px;
-    background-color: rgb(26, 26, 26);
-    border: 1px solid rgba(241, 196, 15, 0.4);
-    border-radius: 8px;
-    padding: 12px;
-    min-width: auto;
-    min-height: auto;
-    max-height: 400px;
-    display: none;
-    z-index: 2100;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px;
-    overflow-y: auto;
+      @media (max-width: 768px) {
+        .header-left {
+          gap: 8px !important;
+          flex-wrap: wrap;
+        }
+        .header-title h1 {
+          font-weight: 600 !important;
+        }
+        .header-right {
+          gap: 8px !important;
+        }
+        button.new-chat-btn {
+          gap: 4px !important;
+          padding: 10px 10px !important;
+          border-radius: 4px !important;
+          font-weight: 600 !important;
+          font-size: 12px !important;
+        }
+        .send-btn {
+          padding: 15px 18px !important;
+          border-radius: 12px !important;
+          font-size: 14px !important;
+          letter-spacing: 0 !important;
+        }
       }
-
-@media (max-width: 768px) {
-  .header-left {
-    gap: 8px !important;
-    flex-wrap: wrap;
-}
-.header-title h1 {
-    font-weight: 600 !important;
-}
-.header-right {
-    gap: 8px !important;
-}
-button.new-chat-btn {
-    gap: 4px !important;
-    padding: 10px 10px !important;
-    border-radius: 4px !important;
-    font-weight: 600 !important;
-    font-size: 12px !important;
-}
-.send-btn {
-    padding: 15px 18px !important;
-    border-radius: 12px !important;
-    font-size: 14px  !important;
-    letter-spacing: 0 !important;
-}
-
-.active_user {
-   
-    top: 120px;
-    left: 105px;
-   
-}
-div#user-menu-popover {
-    top: 120px !important;
-}
-
-}
-      #active-users-list > div:last-child {
-  border-bottom: 0 !important;
-}
+      div#user-menu-popover {
+        top: 120px !important;
+      }
     </style>
   </head>
 
   <body>
-    <div class="video-background"></div>
-    <div class="overlay"></div>
-
     <!-- Login Page -->
     <div id="login-page-wrapper" class="login-page-wrapper" x-data="loginApp()">
       <div class="login-page-content">
@@ -872,11 +778,10 @@ div#user-menu-popover {
     <div
       id="main-app-wrapper"
       class="app-container"
-      x-data="vicpApp()"
+      x-data="sopApp()"
       x-init="init()"
       style="display: none"
     >
-
       <div class="app-header">
         <div class="header-left">
           <img
@@ -886,48 +791,102 @@ div#user-menu-popover {
           />
           <div class="header-title">
             <h1>SOP Chatbot</h1>
-            <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px">
               <p>Lxintel SOP Chatbot Service</p>
             </div>
           </div>
         </div>
-        <div class="header-right" style="display: flex; align-items: center; gap: 16px;">
+        <div
+          class="header-right"
+          style="display: flex; align-items: center; gap: 16px"
+        >
           <!-- NEW CHAT BUTTON -->
-          <button 
-            class="new-chat-btn" 
+          <button
+            class="new-chat-btn"
             onclick="startNewChat()"
-            style="display: flex; align-items: center; gap: 8px; background-color: #f1c40f; color: #111; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background-color: #f1c40f;
+              color: #111;
+              border: none;
+              padding: 10px 16px;
+              border-radius: 6px;
+              font-weight: 600;
+              cursor: pointer;
+              font-size: 14px;
+            "
             title="Start a new conversation"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+              ></path>
             </svg>
             NEW CHAT
           </button>
 
           <!-- SOP Admin button, redirects to admin sop page -->
-          <a 
+          <a
             href="/adminpanel"
-            style="display: flex; align-items: center; gap: 8px; background-color: #f1c40f; color: #111; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; text-decoration: none;"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background-color: #f1c40f;
+              color: #111;
+              border: none;
+              padding: 10px 16px;
+              border-radius: 6px;
+              font-weight: 600;
+              cursor: pointer;
+              font-size: 14px;
+              text-decoration: none;
+            "
             title="Go to SOP Admin"
-          >SOP Admin
+            >SOP Admin
           </a>
-          
+
           <!-- MENU ICON -->
           <button
-            style="background: none; border: none; cursor: pointer; padding: 8px; position: relative;"
+            style="
+              background: none;
+              border: none;
+              cursor: pointer;
+              padding: 8px;
+              position: relative;
+            "
             onclick="toggleUserMenu()"
             title="User menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#f1c40f"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <line x1="4" y1="6" x2="20" y2="6"></line>
               <line x1="4" y1="12" x2="20" y2="12"></line>
               <line x1="4" y1="18" x2="20" y2="18"></line>
             </svg>
           </button>
-          
+
           <!-- USER MENU POPOVER -->
-          <div 
+          <div
             id="user-menu-popover"
             style="
               position: absolute;
@@ -943,7 +902,15 @@ div#user-menu-popover {
               box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             "
           >
-            <div style="padding: 8px 12px; border-bottom: 1px solid #444; margin-bottom: 8px; color: #bbb; font-size: 13px;">
+            <div
+              style="
+                padding: 8px 12px;
+                border-bottom: 1px solid #444;
+                margin-bottom: 8px;
+                color: #bbb;
+                font-size: 13px;
+              "
+            >
               <span x-text="userEmail"></span>
             </div>
             <button
@@ -972,9 +939,6 @@ div#user-menu-popover {
             <div class="empty-state-icon"></div>
             <h2>Welcome to SOP Chatbot</h2>
             <p>Start by asking your queries</p>
-            <!-- <div class="hint">
-              Include: Year of injury • Injury Type • Paralegal hours
-            </div> -->
           </div>
         </div>
       </div>
@@ -995,9 +959,7 @@ div#user-menu-popover {
 
     <script>
       const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
-      let threadId = null;
       let isProcessing = false;
-      let currentMessageToSave = ""; // Store message for saving as template
 
       marked.setOptions({
         gfm: true,
@@ -1012,26 +974,12 @@ div#user-menu-popover {
         }
       }
 
-      function logout() {
-        const vicpApp = window.vicpAppInstance;
-        if (vicpApp) {
-          vicpApp.logout();
-        }
-      }
-
-      function toggleUserMenu() {
-        const popover = document.getElementById("user-menu-popover");
-        if (popover.style.display === "none") {
-          popover.style.display = "block";
-        } else {
-          popover.style.display = "none";
-        }
-      }
-
       // Close menu when clicking outside
-      document.addEventListener("click", function(event) {
+      document.addEventListener("click", function (event) {
         const popover = document.getElementById("user-menu-popover");
-        const menuBtn = event.target.closest("button[onclick='toggleUserMenu()']");
+        const menuBtn = event.target.closest(
+          "button[onclick='toggleUserMenu()']",
+        );
         if (!menuBtn && !popover.contains(event.target)) {
           popover.style.display = "none";
         }
@@ -1056,12 +1004,13 @@ div#user-menu-popover {
         if (
           confirm("Start a new conversation? This will clear the current chat.")
         ) {
-          threadId = null;
-          // localStorage.removeItem('vicp_thread_id');
           document.getElementById("chat-messages").innerHTML = `
-            <h2>Welcome to SOP Chatbot</h2>
+            <div class="empty-state">
+              <div class="empty-state-icon"></div>
+              <h2>Welcome to SOP Chatbot</h2>
+              <p>Start by asking your queries</p>
+            </div>
         `;
-          // document.getElementById('thread-status').textContent = 'Ready';
           document.getElementById("message-input").value = "";
         }
       }
@@ -1086,9 +1035,9 @@ div#user-menu-popover {
         try {
           const response = await fetch(API_BASE_URL + "/chat/", {
             method: "POST",
-            headers: { 
+            headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("jwtsopchatbot")}`,
+              Authorization: `Bearer ${localStorage.getItem("jwtsopchatbot")}`,
               "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify({ question: message }),
@@ -1097,12 +1046,8 @@ div#user-menu-popover {
           const data = await response.json();
 
           if (data.success) {
-            threadId = data.thread_id;
-            // localStorage.setItem('vicp_thread_id', threadId);
-            // document.getElementById('thread-status').textContent = threadId.substring(0, 16) + '...';
-
             const assistantMessages = data.chat_history.filter(
-              (m) => m.role === "assistant"
+              (m) => m.role === "assistant",
             );
             if (assistantMessages.length > 0) {
               const lastMessage =
@@ -1113,7 +1058,7 @@ div#user-menu-popover {
             addMessage("assistant", `${data.answer}`);
           }
         } catch (error) {
-          addMessage("assistant", `⚠️ Connection Error: ${error.message}`);
+          addMessage("assistant", `${error.message}`);
         } finally {
           hideTypingIndicator();
           isProcessing = false;
@@ -1132,10 +1077,6 @@ div#user-menu-popover {
         const wrapper = document.createElement("div");
         wrapper.className = `message-wrapper ${role}`;
 
-        // const avatar = document.createElement('div');
-        // avatar.className = `avatar ${role}`;
-        // avatar.textContent = role === 'user' ? 'U' : 'AI';
-
         const messageDiv = document.createElement("div");
         messageDiv.className = `message ${role}`;
 
@@ -1144,43 +1085,6 @@ div#user-menu-popover {
           messageDiv.innerHTML = marked.parse(processedContent);
         } else {
           messageDiv.textContent = content;
-          
-          // Add save button for user messages
-          /*
-          const messageContainer = document.createElement("div");
-          messageContainer.style.display = "flex";
-          messageContainer.style.gap = "12px";
-          messageContainer.style.alignItems = "flex-start";
-          
-          const saveBtn = document.createElement("button");
-          saveBtn.style.cssText = `
-            background: none;
-            border: none;
-            color: #f1c40f;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.3s;
-            font-size: 16px;
-            flex-shrink: 0;
-            margin-top: 2px;
-          `;
-          saveBtn.title = "Save this message as template";
-          saveBtn.innerHTML = "💾";
-          saveBtn.onmouseover = function() { this.style.background = "rgba(241, 196, 15, 0.2)"; };
-          saveBtn.onmouseout = function() { this.style.background = "none"; };
-          saveBtn.onclick = function(e) {
-            e.stopPropagation();
-            currentMessageToSave = content;
-            openSaveTemplateModal();
-          };
-          
-          wrapper.appendChild(saveBtn);
-          wrapper.appendChild(messageDiv);
-          messagesDiv.appendChild(wrapper);
-          scrollToBottom();
-          return;
-          */
         }
 
         // wrapper.appendChild(avatar);
@@ -1195,10 +1099,6 @@ div#user-menu-popover {
         const wrapper = document.createElement("div");
         wrapper.className = "typing-wrapper";
         wrapper.id = "typing-wrapper";
-
-        // const avatar = document.createElement('div');
-        // avatar.className = 'avatar assistant';
-        // avatar.textContent = 'AI';
 
         const indicator = document.createElement("div");
         indicator.className = "typing-indicator active";
@@ -1260,7 +1160,7 @@ div#user-menu-popover {
         if (rows.length === 0) return "";
 
         let separatorIndex = rows.findIndex((row) =>
-          row.every((cell) => /^[\s\-]+$/.test(cell) || cell === "")
+          row.every((cell) => /^[\s\-]+$/.test(cell) || cell === ""),
         );
 
         let headerRow, dataRows;
@@ -1277,7 +1177,7 @@ div#user-menu-popover {
 
         const numCols = Math.max(
           headerRow.length,
-          ...dataRows.map((row) => row.length)
+          ...dataRows.map((row) => row.length),
         );
 
         while (headerRow.length < numCols) {
@@ -1327,16 +1227,13 @@ div#user-menu-popover {
 
             this.emailChecking = true;
             this.error = "";
-            fetch(
-              `${API_BASE_URL}/auth/verify-email?email=${this.email}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  "ngrok-skip-browser-warning": "true",
-                },
-              }
-            )
+            fetch(`${API_BASE_URL}/auth/verify-email?email=${this.email}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",
+              },
+            })
               .then((res) => res.json())
               .then((json) => {
                 this.emailValid = json.valid;
@@ -1388,7 +1285,7 @@ div#user-menu-popover {
                 window.dispatchEvent(
                   new CustomEvent("login-success", {
                     detail: { email: this.email },
-                  })
+                  }),
                 );
               })
               .catch((err) => {
@@ -1399,7 +1296,7 @@ div#user-menu-popover {
         };
       }
 
-      function vicpApp() {
+      function sopApp() {
         return {
           isLoggedIn: false,
           userEmail: "",
@@ -1441,8 +1338,6 @@ div#user-menu-popover {
           // User is logged in
           loginPageWrapper.style.display = "none";
           mainAppWrapper.style.display = "flex";
-          // Load active users when logged in
-          // loadActiveUsers();
         } else {
           // User is not logged in
           loginPageWrapper.style.display = "flex";
