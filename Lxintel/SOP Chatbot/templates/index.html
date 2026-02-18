@@ -110,15 +110,6 @@
         align-items: center;
       }
 
-      /* .thread-id { 
-      font-size: 11px; 
-      color: #f1c40f; 
-      background: rgba(241,196,15,0.1); 
-      padding: 8px 14px; 
-      border-radius: 6px; 
-      font-family: 'Courier New', monospace; 
-      border: 1px solid rgba(241,196,15,0.3);
-    } */
       .new-chat-btn {
         background: rgba(241, 196, 15, 0.15);
         color: #f1c40f;
@@ -242,29 +233,6 @@
       .message-wrapper.user {
         justify-content: flex-end;
       }
-
-      /* .avatar { 
-      width: 40px; 
-      height: 40px; 
-      border-radius: 50%; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      flex-shrink: 0; 
-      font-weight: 700; 
-      font-size: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-    .avatar.user { 
-      background: linear-gradient(135deg, #f1c40f 0%, #d4ac0d 100%); 
-      color: #000;
-      border: 2px solid rgba(241,196,15,0.3);
-    }
-    .avatar.assistant { 
-      background: linear-gradient(135deg, #333 0%, #222 100%); 
-      color: #f1c40f;
-      border: 2px solid rgba(241,196,15,0.3);
-    } */
 
       .message {
         max-width: 75%;
@@ -837,22 +805,7 @@ button.new-chat-btn {
 div#user-menu-popover {
     top: 120px !important;
 }
-/* .app-header {
-    width: 100%;
-    position: fixed;
-    
-} */
-/* .chat-messages {
-   
-    padding-top: 120px;
-} */
-/* .input-container {
 
-    padding: 24px 8px;
-  
-    position: fixed;
-    bottom: 0;
-} */
 }
       #active-users-list > div:last-child {
   border-bottom: 0 !important;
@@ -869,7 +822,7 @@ div#user-menu-popover {
       <div class="login-page-content">
         <div class="login-logo-section">
           <h1>SOP Chatbot</h1>
-          <p>Professional Legal Case Analysis Platform</p>
+          <p>Professional Chatbot Platform</p>
         </div>
         <div class="login-form-card">
           <h2>LOGIN</h2>
@@ -923,221 +876,6 @@ div#user-menu-popover {
       x-init="init()"
       style="display: none"
     >
-      <!-- Save Template Modal -->
-      <!--
-      <div
-        id="save-template-modal"
-        style="
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.8);
-          display: none;
-          align-items: center;
-          justify-content: center;
-          z-index: 2000;
-        "
-        onclick="event.target.id === 'save-template-modal' && closeSaveTemplateModal()"
-      >
-        <div style="
-          background: #1a1a1a;
-          border: 1px solid rgba(241, 196, 15, 0.4);
-          border-radius: 12px;
-          padding: 32px;
-          max-width: 500px;
-          width: 90%;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        ">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-            <h2 style="color: #f1c40f; font-size: 20px; font-weight: 700; margin: 0;">Save as Template</h2>
-            <button
-              onclick="closeSaveTemplateModal()"
-              style="
-                background: none;
-                border: none;
-                color: #999;
-                font-size: 24px;
-                cursor: pointer;
-                padding: 0;
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
-            >×</button>
-          </div>
-          <p style="color: #aaa; margin: 0 0 20px 0; font-size: 14px;">Save this message as a template for future use</p>
-          <form onsubmit="saveMsgAsTemplate(event)" style="display: flex; flex-direction: column; gap: 16px;">
-            <div>
-              <label style="display: block; color: #f1c40f; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Template Name *</label>
-              <input
-                id="template-name-input"
-                type="text"
-                placeholder="e.g., Demand Letter v1"
-                required
-                style="
-                  width: 100%;
-                  padding: 10px 12px;
-                  background: rgba(0, 0, 0, 0.6);
-                  border: 1px solid rgba(241, 196, 15, 0.3);
-                  border-radius: 6px;
-                  color: #f1c40f;
-                  font-family: 'Montserrat', sans-serif;
-                  font-size: 14px;
-                  transition: all 0.3s;
-                "
-                onfocus="this.style.borderColor='rgba(241, 196, 15, 0.6)'"
-                onblur="this.style.borderColor='rgba(241, 196, 15, 0.3)'"
-              />
-            </div>
-            <div>
-              <label style="display: block; color: #f1c40f; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Description *</label>
-              <textarea
-                id="template-description-input"
-                placeholder="Brief description of this template"
-                required
-                style="
-                  width: 100%;
-                  padding: 10px 12px;
-                  background: rgba(0, 0, 0, 0.6);
-                  border: 1px solid rgba(241, 196, 15, 0.3);
-                  border-radius: 6px;
-                  color: #f1c40f;
-                  font-family: 'Montserrat', sans-serif;
-                  font-size: 14px;
-                  resize: vertical;
-                  min-height: 80px;
-                  transition: all 0.3s;
-                "
-                onfocus="this.style.borderColor='rgba(241, 196, 15, 0.6)'"
-                onblur="this.style.borderColor='rgba(241, 196, 15, 0.3)'"
-              ></textarea>
-            </div>
-            <div id="template-modal-message" style="font-size: 14px; text-align: center; display: none;"></div>
-            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px;">
-              <button
-                type="button"
-                onclick="closeSaveTemplateModal()"
-                style="
-                  background: rgba(241, 196, 15, 0.1);
-                  color: #f1c40f;
-                  border: 1px solid rgba(241, 196, 15, 0.3);
-                  padding: 10px 20px;
-                  border-radius: 6px;
-                  font-weight: 600;
-                  cursor: pointer;
-                  transition: all 0.3s;
-                  font-size: 14px;
-                "
-              >Cancel</button>
-              <button
-                id="save-template-btn"
-                type="submit"
-                style="
-                  background: #f1c40f;
-                  color: #000;
-                  border: none;
-                  padding: 10px 20px;
-                  border-radius: 6px;
-                  font-weight: 700;
-                  cursor: pointer;
-                  transition: all 0.3s;
-                  font-size: 14px;
-                "
-              >Save Template</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      -->
-
-      <!-- Delete Template Confirmation Modal -->
-      <!--
-      <div
-        id="delete-template-modal"
-        style="
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.8);
-          display: none;
-          align-items: center;
-          justify-content: center;
-          z-index: 2000;
-        "
-        onclick="event.target.id === 'delete-template-modal' && closeDeleteTemplateModal()"
-      >
-        <div style="
-          background: #1a1a1a;
-          border: 1px solid rgba(241, 196, 15, 0.4);
-          border-radius: 12px;
-          padding: 32px;
-          max-width: 400px;
-          width: 90%;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        ">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-            <h2 style="color: #f1c40f; font-size: 20px; font-weight: 700; margin: 0;">Delete Template</h2>
-            <button
-              onclick="closeDeleteTemplateModal()"
-              style="
-                background: none;
-                border: none;
-                color: #999;
-                font-size: 24px;
-                cursor: pointer;
-                padding: 0;
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
-            >×</button>
-          </div>
-          <p style="color: #aaa; margin: 0 0 24px 0; font-size: 14px;">Are you sure you want to delete this template? This action cannot be undone.</p>
-          <div id="delete-template-message" style="font-size: 14px; text-align: center; margin-bottom: 20px; display: none;"></div>
-          <div style="display: flex; gap: 12px; justify-content: flex-end;">
-            <button
-              type="button"
-              onclick="closeDeleteTemplateModal()"
-              style="
-                background: rgba(241, 196, 15, 0.1);
-                color: #f1c40f;
-                border: 1px solid rgba(241, 196, 15, 0.3);
-                padding: 10px 20px;
-                border-radius: 6px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s;
-                font-size: 14px;
-              "
-            >Cancel</button>
-            <button
-              id="confirm-delete-btn"
-              type="button"
-              onclick="confirmDeleteTemplate()"
-              style="
-                background: #e74c3c;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 6px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s;
-                font-size: 14px;
-              "
-            >Delete</button>
-          </div>
-        </div>
-      </div>
-      -->
 
       <div class="app-header">
         <div class="header-left">
@@ -1149,40 +887,7 @@ div#user-menu-popover {
           <div class="header-title">
             <h1>SOP Chatbot</h1>
             <div style="display: flex; align-items: center; gap: 12px;">
-              <p>AI-Powered Case Analysis</p>
-              <!-- Active Users Count -->
-              <!--
-              <button
-                id="active-users-btn"
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                  background: none;
-                  border: none;
-                  cursor: pointer;
-                  padding: 4px 10px;
-                  border-radius: 6px;
-                  transition: all 0.3s;
-                  color: #f1c40f;
-                  font-size: 12px;
-                  font-weight: 600;
-                "
-                onclick="toggleActiveUsersPopover()"
-                title="Active users on this tool"
-              >
-                <span style="
-                  display: inline-block;
-                  width: 8px;
-                  height: 8px;
-                  background: #2ecc71;
-                  border-radius: 50%;
-                  box-shadow: 0 0 8px #2ecc71;
-                "></span>
-                <span id="active-count">0</span>
-                <span style="margin-left: 4px;">Users</span>
-              </button>
-              -->
+              <p>Lxintel SOP Chatbot Service</p>
             </div>
           </div>
         </div>
@@ -1202,11 +907,10 @@ div#user-menu-popover {
 
           <!-- SOP Admin button, redirects to admin sop page -->
           <a 
-            href=""
+            href="/adminpanel"
             style="display: flex; align-items: center; gap: 8px; background-color: #f1c40f; color: #111; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; text-decoration: none;"
             title="Go to SOP Admin"
-          >
-            SOP Admin
+          >SOP Admin
           </a>
           
           <!-- MENU ICON -->
@@ -1265,9 +969,9 @@ div#user-menu-popover {
       <div class="chat-container">
         <div class="chat-messages" id="chat-messages">
           <div class="empty-state">
-            <div class="empty-state-icon">⚖️</div>
+            <div class="empty-state-icon"></div>
             <h2>Welcome to SOP Chatbot</h2>
-            <p>Start by describing your case details</p>
+            <p>Start by asking your queries</p>
             <!-- <div class="hint">
               Include: Year of injury • Injury Type • Paralegal hours
             </div> -->
@@ -1282,100 +986,15 @@ div#user-menu-popover {
             placeholder="Type your message here..."
             onkeydown="handleKeyPress(event)"
           ></textarea>
-          <!-- Templates Button -->
-          <!--
-          <button
-            id="templates-btn"
-            style="
-              background: none;
-              border: none;
-              cursor: pointer;
-              padding: 8px;
-              color: #f1c40f;
-              transition: all 0.3s;
-              position: relative;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 44px;
-              height: 44px;
-              border-radius: 8px;
-            "
-            onmouseover="this.style.background='rgba(241, 196, 15, 0.1)'"
-            onmouseout="this.style.background='none'"
-            onclick="toggleTemplatesPopover(event)"
-            title="Load template message"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-              <polyline points="17 21 17 13 7 13 7 21"></polyline>
-              <polyline points="7 3 7 8 15 8"></polyline>
-            </svg>
-          </button>
-          -->
           <button class="send-btn" onclick="sendMessage()" id="send-btn">
             Send
           </button>
         </div>
       </div>
-
-      <!-- Templates Popover (Outside input-container) -->
-      <!--
-      <div
-        id="templates-popover"
-        style="
-          position: fixed;
-          bottom: 90px;
-          right: 32px;
-          background-color: #1a1a1a;
-          border: 1px solid rgba(241, 196, 15, 0.4);
-          border-radius: 8px;
-          padding: 12px;
-          min-width: auto;
-          max-height: auto;
-          display: none;
-          z-index: 2000;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-          overflow-y: auto;
-        "
-      >
-        <div style="
-          padding: 8px 0;
-          margin-bottom: 8px;
-          border-bottom: 1px solid rgba(241, 196, 15, 0.3);
-          color: #f1c40f;
-          font-size: 12px;
-          font-weight: 600;
-        ">Templates</div>
-        <div id="templates-list" style="color: #aaa; font-size: 13px;">
-          <div style="padding: 8px 0; color: #666;">Loading...</div>
-        </div>
-      </div>
-      -->
-
-      <!-- Active Users Popover (Outside header) -->
-      <!--
-      <div
-        id="active-users-popover"
-        class="active_user"
-      >
-        <div style="
-          padding: 8px 0;
-          margin-bottom: 8px;
-          border-bottom: 1px solid rgba(241, 196, 15, 0.3);
-          color: #f1c40f;
-          font-size: 12px;
-          font-weight: 600;
-        ">Active Users</div>
-        <div id="active-users-list" style="color: #aaa; font-size: 13px;">
-          <div style="padding: 8px 0; color: #666;">Loading...</div>
-        </div>
-      </div>
-      -->
     </div>
 
     <script>
-      const API_BASE_URL = "https://slimy-leonia-kyphotic.ngrok-free.dev";
+      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
       let threadId = null;
       let isProcessing = false;
       let currentMessageToSave = ""; // Store message for saving as template
@@ -1385,15 +1004,6 @@ div#user-menu-popover {
         breaks: true,
         tables: true,
       });
-
-      // Load saved thread ID from localStorage on page load
-      // (function loadSavedThread() {
-      // const savedThreadId = localStorage.getItem('vicp_thread_id');
-      // if (savedThreadId) {
-      //   threadId = savedThreadId;
-      //   console.log('Loaded thread:', threadId);
-      // }
-      // })();
 
       function handleKeyPress(event) {
         if (event.key === "Enter" && !event.shiftKey) {
@@ -1437,8 +1047,8 @@ div#user-menu-popover {
       }
 
       function logout() {
-        localStorage.removeItem("jwtvicp");
-        localStorage.removeItem("vicpEmail");
+        localStorage.removeItem("jwtsopchatbot");
+        localStorage.removeItem("sopEmail");
         window.dispatchEvent(new Event("logout-success"));
       }
 
@@ -1449,14 +1059,7 @@ div#user-menu-popover {
           threadId = null;
           // localStorage.removeItem('vicp_thread_id');
           document.getElementById("chat-messages").innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon">⚖️</div>
             <h2>Welcome to SOP Chatbot</h2>
-            <p>Start by describing your case details</p>
-            // <div class="hint">
-            //   💡 Include: Year of injury • Injury Type • Paralegal hours
-            // </div>
-          </div>
         `;
           // document.getElementById('thread-status').textContent = 'Ready';
           document.getElementById("message-input").value = "";
@@ -1485,7 +1088,7 @@ div#user-menu-popover {
             method: "POST",
             headers: { 
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("jwtvicp")}`,
+              "Authorization": `Bearer ${localStorage.getItem("jwtsopchatbot")}`,
               "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify({ question: message }),
@@ -1507,7 +1110,7 @@ div#user-menu-popover {
               addMessage("assistant", lastMessage.content);
             }
           } else {
-            addMessage("assistant", `⚠️ Error: ${data.answer}`);
+            addMessage("assistant", `${data.answer}`);
           }
         } catch (error) {
           addMessage("assistant", `⚠️ Connection Error: ${error.message}`);
@@ -1777,8 +1380,8 @@ div#user-menu-popover {
                 return res.json();
               })
               .then((json) => {
-                localStorage.setItem("jwtvicp", json.access_token);
-                localStorage.setItem("vicpEmail", this.email);
+                localStorage.setItem("jwtsopchatbot", json.access_token);
+                localStorage.setItem("sopEmail", this.email);
                 this.loggedIn = true;
                 this.error = "";
                 this.loggingIn = false;
@@ -1811,7 +1414,7 @@ div#user-menu-popover {
 
           checkAuth() {
             const token = localStorage.getItem("jwt");
-            const userEmail = localStorage.getItem("vicpEmail");
+            const userEmail = localStorage.getItem("sopEmail");
             if (token && userEmail) {
               this.isLoggedIn = true;
               this.userEmail = userEmail;
@@ -1819,8 +1422,8 @@ div#user-menu-popover {
           },
 
           logout() {
-            localStorage.removeItem("jwtvicp");
-            localStorage.removeItem("vicpEmail");
+            localStorage.removeItem("jwtsopchatbot");
+            localStorage.removeItem("sopEmail");
             window.dispatchEvent(new Event("logout-success"));
           },
         };
@@ -1830,7 +1433,7 @@ div#user-menu-popover {
     <script>
       // Check token on page load and toggle UIs accordingly
       function checkAuthToken() {
-        const token = localStorage.getItem("jwtvicp");
+        const token = localStorage.getItem("jwtsopchatbot");
         const loginPageWrapper = document.getElementById("login-page-wrapper");
         const mainAppWrapper = document.getElementById("main-app-wrapper");
 
@@ -1859,407 +1462,6 @@ div#user-menu-popover {
       window.addEventListener("login-success", () => {
         setTimeout(checkAuthToken, 100);
       });
-
-      // ============ FEATURE 1: ACTIVE USERS COUNT ============
-      /*
-      async function loadActiveUsers() {
-        try {
-          const token = localStorage.getItem("jwtvicp");
-          if (!token) return;
-
-          const response = await fetch(
-            `${API_BASE_URL}/VICP_Attorney_Fees/active-today`,
-            {
-              method: "GET",
-              headers: {
-                "Authorization": `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true"
-              }
-            }
-          );
-
-          const data = await response.json();
-          
-          if (Array.isArray(data)) {
-            // Update active users count
-            const count = data.length;
-            const countElement = document.getElementById("active-count");
-            if (countElement) {
-              countElement.textContent = count;
-            }
-
-            // Populate active users list
-            const usersList = document.getElementById("active-users-list");
-            if (usersList) {
-              if (count === 0) {
-                usersList.innerHTML = '<div style="padding: 8px 0; color: #666;">No active users</div>';
-              } else {
-                usersList.innerHTML = data.map(user => `
-                  <div style="
-                    padding: 10px 8px;
-                    border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 16px;
-                  ">
-                    <span style="color: #f1c40f; font-weight: 500; flex: 1;">${user.email}</span>
-                    <span style="color: #aaa; font-size: 12px; white-space: nowrap; flex-shrink: 0;">${formatLastActive(user.last_active)}</span>
-                  </div>
-                `).join("");
-              }
-            }
-          }
-        } catch (error) {
-          console.error("Failed to load active users:", error);
-        }
-      }
-
-      function formatLastActive(dateStr) {
-        try {
-          const date = new Date(dateStr);
-          const now = new Date();
-          const diffMs = now - date;
-          const diffMins = Math.floor(diffMs / 60000);
-          const diffHours = Math.floor(diffMs / 3600000);
-          const diffDays = Math.floor(diffMs / 86400000);
-
-          if (diffMins < 1) return "just now";
-          if (diffMins < 60) return `${diffMins}m ago`;
-          if (diffHours < 24) return `${diffHours}h ago`;
-          if (diffDays < 7) return `${diffDays}d ago`;
-          
-          return date.toLocaleDateString();
-        } catch (e) {
-          return dateStr;
-        }
-      }
-
-      function toggleActiveUsersPopover() {
-        const popover = document.getElementById("active-users-popover");
-        if (popover.style.display === "none" || popover.style.display === "") {
-          popover.style.display = "block";
-          // Reload active users when popover is opened
-          loadActiveUsers();
-        } else {
-          popover.style.display = "none";
-        }
-      }
-
-      // Close active users popover when clicking outside
-      document.addEventListener("click", function(event) {
-        const popover = document.getElementById("active-users-popover");
-        const btn = document.getElementById("active-users-btn");
-        if (!btn.contains(event.target) && !popover.contains(event.target)) {
-          popover.style.display = "none";
-        }
-      });
-      */
-
-      // ============ FEATURE 2: SAVE MESSAGE AS TEMPLATE ============
-      /*
-      function openSaveTemplateModal() {
-        const modal = document.getElementById("save-template-modal");
-        const nameInput = document.getElementById("template-name-input");
-        const descInput = document.getElementById("template-description-input");
-        const messageDiv = document.getElementById("template-modal-message");
-        const saveBtn = document.getElementById("save-template-btn");
-        
-        modal.style.display = "flex";
-        nameInput.value = "";
-        descInput.value = "";
-        messageDiv.style.display = "none";
-        messageDiv.textContent = "";
-        
-        // Reset button state
-        saveBtn.disabled = false;
-        saveBtn.textContent = "Save Template";
-        
-        nameInput.focus();
-      }
-
-      function closeSaveTemplateModal() {
-        const modal = document.getElementById("save-template-modal");
-        modal.style.display = "none";
-        currentMessageToSave = "";
-      }
-
-      async function saveMsgAsTemplate(event) {
-        event.preventDefault();
-        
-        const nameInput = document.getElementById("template-name-input");
-        const descInput = document.getElementById("template-description-input");
-        const saveBtn = document.getElementById("save-template-btn");
-        const messageDiv = document.getElementById("template-modal-message");
-
-        const templateName = nameInput.value.trim();
-        const templateDesc = descInput.value.trim();
-        const templateText = currentMessageToSave;
-
-        if (!templateName || !templateDesc) {
-          messageDiv.style.display = "block";
-          messageDiv.style.color = "#e74c3c";
-          messageDiv.textContent = "Please fill in all fields";
-          return;
-        }
-
-        try {
-          saveBtn.disabled = true;
-          saveBtn.textContent = "Saving...";
-          messageDiv.style.display = "block";
-          messageDiv.style.color = "#f1c40f";
-          messageDiv.textContent = "Saving...";
-
-          const token = localStorage.getItem("jwtvicp");
-          const formData = new URLSearchParams();
-          formData.append("template_name", templateName);
-          formData.append("description", templateDesc);
-          formData.append("tags", "vicp");
-          formData.append("template_text", templateText);
-
-          const response = await fetch(
-            `${API_BASE_URL}/VICP_Attorney_Fees/templates`,
-            {
-              method: "POST",
-              headers: {
-                "Authorization": `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true",
-                "Content-Type": "application/x-www-form-urlencoded"
-              },
-              body: formData
-            }
-          );
-
-          if (response.ok) {
-            messageDiv.style.color = "#2ecc71";
-            messageDiv.textContent = "✓ Template saved successfully";
-            setTimeout(() => {
-              closeSaveTemplateModal();
-            }, 1500);
-          } else {
-            const errorData = await response.json();
-            messageDiv.style.color = "#e74c3c";
-            messageDiv.textContent = `Error: ${errorData.detail || "Failed to save template"}`;
-            saveBtn.disabled = false;
-            saveBtn.textContent = "Save Template";
-          }
-        } catch (error) {
-          messageDiv.style.color = "#e74c3c";
-          messageDiv.textContent = `Error: ${error.message}`;
-          saveBtn.disabled = false;
-          saveBtn.textContent = "Save Template";
-        }
-      }
-
-      // ============ FEATURE 3: LOAD TEMPLATES ============
-      async function loadTemplates() {
-        try {
-          const token = localStorage.getItem("jwtvicp");
-          if (!token) return;
-
-          const response = await fetch(
-            `${API_BASE_URL}/VICP_Attorney_Fees/templates`,
-            {
-              method: "GET",
-              headers: {
-                "Authorization": `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true"
-              }
-            }
-          );
-
-          const templates = await response.json();
-          
-          const templatesList = document.getElementById("templates-list");
-          if (!Array.isArray(templates) || templates.length === 0) {
-            templatesList.innerHTML = '<div style="padding: 8px 0; color: #666;">No templates yet</div>';
-            return;
-          }
-
-          templatesList.innerHTML = templates.map(template => `
-            <div
-              style="
-                padding: 12px 8px;
-                border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                gap: 12px;
-                transition: all 0.2s;
-                border-radius: 4px;
-              "
-              onmouseover="this.style.background='rgba(241, 196, 15, 0.1)'"
-              onmouseout="this.style.background='transparent'"
-            >
-              <div
-                onclick="selectTemplate('${escapeHtml(template['Full Text'] || template.template_text || '')}')"
-                style="
-                  flex: 1;
-                  cursor: pointer;
-                "
-              >
-                <div style="color: #f1c40f; font-weight: 600; font-size: 13px;">${escapeHtml(template.name)}</div>
-                <div style="color: #888; font-size: 12px; margin-top: 4px;">${escapeHtml(template.description)}</div>
-              </div>
-              <button
-                onclick="deleteTemplate(${template.id}, event)"
-                style="
-                  background: none;
-                  border: none;
-                  color: #e74c3c;
-                  cursor: pointer;
-                  padding: 4px 8px;
-                  border-radius: 4px;
-                  transition: all 0.2s;
-                  font-size: 18px;
-                  flex-shrink: 0;
-                "
-                title="Delete template"
-                onmouseover="this.style.background='rgba(231, 76, 60, 0.2)'"
-                onmouseout="this.style.background='none'"
-              >🗑️</button>
-            </div>
-          `).join("");
-        } catch (error) {
-          console.error("Failed to load templates:", error);
-          const templatesList = document.getElementById("templates-list");
-          templatesList.innerHTML = '<div style="padding: 8px 0; color: #e74c3c;">Failed to load templates</div>';
-        }
-      }
-
-      function toggleTemplatesPopover(event) {
-        event.stopPropagation();
-        const popover = document.getElementById("templates-popover");
-        const btn = document.getElementById("templates-btn");
-        
-        if (popover.style.display === "none" || popover.style.display === "") {
-          popover.style.display = "block";
-          // Show loading and fetch templates
-          const templatesList = document.getElementById("templates-list");
-          templatesList.innerHTML = '<div style="padding: 8px 0; color: #666;">Loading...</div>';
-          loadTemplates();
-          
-          // Change button to show loader
-          btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 0.8s linear infinite;"><circle cx="12" cy="12" r="10"></circle></svg>';
-        } else {
-          popover.style.display = "none";
-          btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
-        }
-      }
-
-      function selectTemplate(templateText) {
-        const input = document.getElementById("message-input");
-        input.value = templateText;
-        
-        // Close popover
-        const popover = document.getElementById("templates-popover");
-        const btn = document.getElementById("templates-btn");
-        popover.style.display = "none";
-        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
-        
-        // Focus on input
-        input.focus();
-      }
-
-      async function deleteTemplate(templateId, event) {
-        event.stopPropagation();
-        
-        // Store template ID in global variable for confirmation
-        window.templateToDelete = templateId;
-        openDeleteTemplateModal();
-      }
-
-      function openDeleteTemplateModal() {
-        const modal = document.getElementById("delete-template-modal");
-        const messageDiv = document.getElementById("delete-template-message");
-        const deleteBtn = document.getElementById("confirm-delete-btn");
-        
-        modal.style.display = "flex";
-        messageDiv.style.display = "none";
-        messageDiv.textContent = "";
-        deleteBtn.disabled = false;
-        deleteBtn.textContent = "Delete";
-      }
-
-      function closeDeleteTemplateModal() {
-        const modal = document.getElementById("delete-template-modal");
-        modal.style.display = "none";
-        window.templateToDelete = null;
-      }
-
-      async function confirmDeleteTemplate() {
-        const templateId = window.templateToDelete;
-        if (!templateId) return;
-
-        const deleteBtn = document.getElementById("confirm-delete-btn");
-        const messageDiv = document.getElementById("delete-template-message");
-
-        try {
-          deleteBtn.disabled = true;
-          deleteBtn.textContent = "Deleting...";
-          messageDiv.style.display = "block";
-          messageDiv.style.color = "#f1c40f";
-          messageDiv.textContent = "Deleting...";
-
-          const token = localStorage.getItem("jwtvicp");
-          if (!token) return;
-
-          const response = await fetch(
-            `${API_BASE_URL}/VICP_Attorney_Fees/templates/${templateId}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Authorization": `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true"
-              }
-            }
-          );
-
-          if (response.ok) {
-            messageDiv.style.color = "#2ecc71";
-            messageDiv.textContent = "✓ Template deleted successfully";
-            setTimeout(() => {
-              closeDeleteTemplateModal();
-              loadTemplates();
-            }, 1500);
-          } else {
-            messageDiv.style.color = "#e74c3c";
-            messageDiv.textContent = "Failed to delete template";
-            deleteBtn.disabled = false;
-            deleteBtn.textContent = "Delete";
-          }
-        } catch (error) {
-          console.error("Failed to delete template:", error);
-          messageDiv.style.color = "#e74c3c";
-          messageDiv.textContent = "Error: " + error.message;
-          deleteBtn.disabled = false;
-          deleteBtn.textContent = "Delete";
-        }
-      }
-
-      function escapeHtml(text) {
-        const div = document.createElement("div");
-        div.textContent = text;
-        return div.innerHTML;
-      }
-
-      // Close templates popover when clicking outside
-      document.addEventListener("click", function(event) {
-        const popover = document.getElementById("templates-popover");
-        const btn = document.getElementById("templates-btn");
-        
-        // Don't close if clicking on the button or popover itself
-        if (btn && btn.contains(event.target)) return;
-        if (popover && popover.contains(event.target)) return;
-        
-        if (popover && popover.style.display === "block") {
-          popover.style.display = "none";
-          if (btn) {
-            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
-          }
-        }
-      });
-      */
     </script>
   </body>
 </html>
