@@ -232,14 +232,6 @@
         color: #fff;
       }
 
-      .view-prompt-btn {
-        color: #f1c40f;
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: underline;
-        margin-left: 8px;
-      }
-
       .logout-btn {
         background: linear-gradient(135deg, #e74c3c, #c0392b);
         padding: 10px 24px;
@@ -259,109 +251,6 @@
       .logout-btn:hover {
         transform: translateY(-4px);
         box-shadow: 0 0 28px rgba(231, 76, 60, 0.8);
-      }
-
-      .btn-grid {
-        display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      /* CHANGED: New wrapper for each button to contain popup */
-      .dashboard-btn-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .dashboard-btn {
-        background: linear-gradient(135deg, #ffea00, #ffbb00);
-        padding: 20px 30px;
-        border-radius: 12px;
-        color: #000;
-        text-decoration: none;
-        font-size: 1.1rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        box-shadow: 0 4px 20px rgba(255, 235, 0, 0.4);
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255, 220, 0, 0.6);
-        text-align: center;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 80px;
-      }
-
-      .dashboard-btn:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 6px 32px rgba(255, 235, 0, 0.8);
-        background: linear-gradient(135deg, #fff200, #ffcc00);
-      }
-
-      /* CHANGED: New popup styles for individual tool popups */
-      .tool-popup {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 0px;
-        background: rgba(17, 17, 17, 0.98);
-        border: 2px solid rgba(241, 196, 15, 0.4);
-        border-radius: 8px;
-        padding: 8px;
-        min-width: 200px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-        z-index: 100;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-          opacity 0.3s ease,
-          visibility 0.3s ease,
-          transform 0.3s ease;
-        pointer-events: none;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      /* CHANGED: Show popup on wrapper hover */
-      .dashboard-btn-wrapper:hover .tool-popup {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateX(-50%) translateY(0);
-      }
-
-      /* CHANGED: Prevent popup from closing when hovering over it */
-      .tool-popup:hover {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      /* CHANGED: Styles for popup buttons */
-      .popup-btn {
-        background: rgba(241, 196, 15, 0.15);
-        color: #f1c40f;
-        border: 1px solid rgba(241, 196, 15, 0.3);
-        padding: 10px 16px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: center;
-        font-family: "Montserrat", sans-serif;
-      }
-
-      .popup-btn:hover {
-        background: rgba(241, 196, 15, 0.3);
-        border-color: rgba(241, 196, 15, 0.6);
-        transform: translateX(4px);
       }
 
       /* Modal for displaying API data */
@@ -456,65 +345,14 @@
         margin: 0 auto 20px;
       }
 
-      .data-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-
-      .data-table th,
-      .data-table td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-      }
-
-      .data-table th {
-        background: rgba(241, 196, 15, 0.2);
-        color: #f1c40f;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: 0.5px;
-      }
-
-      .data-table tr:hover {
-        background: rgba(241, 196, 15, 0.05);
-      }
-
-      .data-item {
-        background: rgba(0, 0, 0, 0.4);
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        border: 1px solid rgba(241, 196, 15, 0.2);
-      }
-
-      .data-item strong {
-        color: #f1c40f;
-        display: inline-block;
-        min-width: 150px;
-      }
-
       @media (max-width: 991px) {
-        .btn-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
 
         .dashboard-header h1 {
           font-size: 2.5rem;
         }
-
-        /* CHANGED: Adjust popup positioning for smaller screens */
-        .tool-popup {
-          min-width: 180px;
-        }
       }
 
       @media (max-width: 767px) {
-        .btn-grid {
-          grid-template-columns: 1fr;
-        }
 
         .dashboard-header h1 {
           font-size: 2rem;
@@ -524,32 +362,12 @@
           font-size: 1rem;
         }
 
-        .dashboard-btn {
-          min-height: 60px;
-          font-size: 1rem;
-          padding: 16px 20px;
-        }
-
         .modal-content {
           padding: 20px;
         }
 
         .modal-header h2 {
           font-size: 20px;
-        }
-
-        /* CHANGED: Full width popup on mobile */
-        .tool-popup {
-          left: 0;
-          right: 0;
-          transform: none;
-          margin-left: 0;
-          margin-right: 0;
-          min-width: auto;
-        }
-
-        .dashboard-btn-wrapper:hover .tool-popup {
-          transform: none;
         }
       }
     </style>
@@ -690,7 +508,7 @@
     </div>
 
     <script>
-      const API_BASE_URL = "https://attired-hitchily-stephane.ngrok-free.dev";
+      const API_BASE_URL = "";
 
       // Check if already logged in on page load
       window.addEventListener("DOMContentLoaded", function () {
