@@ -189,6 +189,7 @@
         color: #e0e0e0;
         border: 1px solid rgba(241, 196, 15, 0.2);
         border-bottom-left-radius: 4px;
+        white-space: pre-line;
       }
 
       .message.assistant h3 {
@@ -927,13 +928,7 @@
       </div>
 
       <div class="chat-container">
-        <div class="chat-messages" id="chat-messages">
-          <div class="empty-state">
-            <div class="empty-state-icon"></div>
-            <h2>Welcome to Ramos Law Playbook Chatbot</h2>
-            <p>Start by asking your Queries</p>
-          </div>
-        </div>
+        <div class="chat-messages" id="chat-messages"></div>
       </div>
 
       <div class="input-container">
@@ -951,7 +946,7 @@
     </div>
 
     <script>
-      const API_BASE_URL = "";
+      const API_BASE_URL = "https://slimy-leonia-kyphotic.ngrok-free.dev";
       let isProcessing = false;
 
       marked.setOptions({
@@ -997,14 +992,11 @@
         if (
           confirm("Start a new conversation? This will clear the current chat.")
         ) {
-          document.getElementById("chat-messages").innerHTML = `
-            <div class="empty-state">
-              <div class="empty-state-icon"></div>
-              <h2>Welcome to Ramos Law Playbook Chatbot</h2>
-              <p>Start by asking your Queries</p>
-            </div>
-        `;
+          const messagesDiv = document.getElementById("chat-messages");
+          messagesDiv.innerHTML = "";
           document.getElementById("message-input").value = "";
+
+          addWelcomeMessage();
         }
       }
 
@@ -1085,6 +1077,41 @@
         messagesDiv.appendChild(wrapper);
 
         scrollToBottom();
+      }
+
+      function addPlainAssistantMessage(content) {
+        const messagesDiv = document.getElementById("chat-messages");
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "message-wrapper assistant";
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "message assistant";
+
+        messageDiv.textContent = content; // IMPORTANT (not innerHTML)
+
+        wrapper.appendChild(messageDiv);
+        messagesDiv.appendChild(wrapper);
+
+        scrollToBottom();
+      }
+
+      function addWelcomeMessage() {
+        const welcomeText = `Hello, I’m the Ramos Law Playbook Chatbot Assistant. Please Ask your Questions.
+Below are some example questions to get you started:
+
+1. How should client account reconciliations be performed?
+2. How should vendor payment discrepancies be handled?
+3. What steps are involved in preparing client account statements?
+4. How should invoices be reviewed before approval?
+5. What should I do if I forgot my login password?
+6. How do I ask a client for a Google review?
+7. What information goes into a demand letter?
+8. What information do I need to gather during an MVA intake?
+9. Do we take COVID-19 vaccine injury cases?
+10. How do I request paid time off?`;
+
+        addPlainAssistantMessage(welcomeText);
       }
 
       function showTypingIndicator() {
@@ -1326,11 +1353,17 @@
         const token = localStorage.getItem("jwtsopchatbot");
         const loginPageWrapper = document.getElementById("login-page-wrapper");
         const mainAppWrapper = document.getElementById("main-app-wrapper");
+        const messagesDiv = document.getElementById("chat-messages");
 
         if (token) {
           // User is logged in
           loginPageWrapper.style.display = "none";
           mainAppWrapper.style.display = "flex";
+
+          // Show welcome message if chat is empty
+          if (messagesDiv && messagesDiv.children.length === 0) {
+            addWelcomeMessage();
+          }
         } else {
           // User is not logged in
           loginPageWrapper.style.display = "flex";
@@ -1348,7 +1381,9 @@
 
       // Also check after login
       window.addEventListener("login-success", () => {
-        setTimeout(checkAuthToken, 100);
+        setTimeout(() => {
+          checkAuthToken();
+        }, 100);
       });
     </script>
   </body>
